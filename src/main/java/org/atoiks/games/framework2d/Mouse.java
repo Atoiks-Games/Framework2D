@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 
-public final class Mouse extends MouseAdapter implements IInputDevice {
+public final class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
 
     public static final int BTN_PRESSED = -1;
 
@@ -24,26 +24,32 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
         wheelRot = 0;
     }
 
+    @Override
     public int getLocalX() {
         return localX;
     }
 
+    @Override
     public int getLocalY() {
         return localY;
     }
 
+    @Override
     public int getGlobalX() {
         return globalX;
     }
 
+    @Override
     public int getGlobalY() {
         return globalY;
     }
 
+    @Override
     public int getWheelRotation() {
         return wheelRot;
     }
 
+    @Override
     public boolean isButtonDown(int btn) {
         if (btn < btnbuf.length) {
             return btnbuf[btn] == BTN_PRESSED;
@@ -51,6 +57,7 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
         return false;
     }
 
+    @Override
     public boolean isButtonUp(int btn) {
         if (btn < btnbuf.length) {
             return btnbuf[btn] == 0;
@@ -58,6 +65,7 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
         return false;
     }
 
+    @Override
     public boolean isButtonClicked(int btn) {
         if (btn < btnbuf.length) {
             return btnbuf[btn] > 0;
@@ -65,6 +73,7 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
         return false;
     }
 
+    @Override
     public boolean isButtonClicked(int btn, int clicks) {
         if (btn < btnbuf.length) {
             return btnbuf[btn] == clicks;
@@ -72,6 +81,7 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
         return false;
     }
 
+    @Override
     public int getButtonClicks(int btn) {
         if (btn < btnbuf.length) {
             return Math.max(0, btnbuf[btn]);
@@ -112,5 +122,10 @@ public final class Mouse extends MouseAdapter implements IInputDevice {
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         wheelRot = e.getWheelRotation();
+    }
+
+    @Override
+    public MouseAdapter getRawInputDevice() {
+        return this;
     }
 }

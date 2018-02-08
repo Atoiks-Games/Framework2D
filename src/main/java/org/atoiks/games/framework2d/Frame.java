@@ -1,10 +1,10 @@
 package org.atoiks.games.framework2d;
 
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.Graphics;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +22,9 @@ public class Frame extends AbstractFrame<JFrame> {
         }
     };
 
+    private final Keyboard kb = new Keyboard();
+    private final Mouse m = new Mouse();
+
     private final JFrame frame;
 
     public Frame(FrameInfo info) {
@@ -38,16 +41,20 @@ public class Frame extends AbstractFrame<JFrame> {
         // Frame Listeners
         frame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent arg0) {
+            public void windowClosing(WindowEvent e) {
                 Frame.this.running = false;
             }
         });
-        frame.addKeyListener(sceneMgr.keyboard());
+        frame.addKeyListener(kb.getRawInputDevice());
 
         // Canvas Listeners
-        canvas.addMouseListener(sceneMgr.mouse());
-        canvas.addMouseMotionListener(sceneMgr.mouse());
-        canvas.addMouseWheelListener(sceneMgr.mouse());
+        canvas.addMouseListener(m.getRawInputDevice());
+        canvas.addMouseMotionListener(m.getRawInputDevice());
+        canvas.addMouseWheelListener(m.getRawInputDevice());
+
+        // Transfer input devices to scene manager
+        sceneMgr.kbHandle = kb;
+        sceneMgr.mouseHandle = m;
     }
 
     @Override

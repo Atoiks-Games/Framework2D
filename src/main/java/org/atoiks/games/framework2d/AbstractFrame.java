@@ -34,8 +34,7 @@ public abstract class AbstractFrame<T> implements IFrame<T> {
                 }
 
                 // Reset input devices
-                sceneMgr.keyboard().reset();
-                sceneMgr.mouse().reset();
+                sceneMgr.resetInputDevices();
 
                 if (sceneMgr.shouldSkipCycle()) {
                     // Reset time info

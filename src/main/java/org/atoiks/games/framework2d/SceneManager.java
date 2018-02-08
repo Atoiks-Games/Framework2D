@@ -7,20 +7,15 @@ import java.awt.Graphics;
 public final class SceneManager {
 
     private final Map<String, Object> res = new HashMap<>();
-    private final Keyboard kbHandle;
-    private final Mouse mouseHandle;
 
     private Scene[] scenes;
     private int sceneId;
     private boolean skipCycle;
 
-    public SceneManager(Scene... scenes) {
-        this(new Keyboard(), new Mouse(), scenes);
-    }
+    /* package */ IKeyboard kbHandle;
+    /* package */ IMouse mouseHandle;
 
-    public SceneManager(Keyboard kb, Mouse m, Scene... scenes) {
-        this.kbHandle = kb;
-        this.mouseHandle = m;
+    public SceneManager(Scene... scenes) {
         this.scenes = scenes;
         this.sceneId = -1;
         this.skipCycle = false;
@@ -70,11 +65,16 @@ public final class SceneManager {
         return true;
     }
 
-    public Keyboard keyboard() {
+    public void resetInputDevices() {
+        kbHandle.reset();
+        mouseHandle.reset();
+    }
+
+    public IKeyboard keyboard() {
         return kbHandle;
     }
 
-    public Mouse mouse() {
+    public IMouse mouse() {
         return mouseHandle;
     }
 

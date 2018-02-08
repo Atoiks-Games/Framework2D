@@ -4,7 +4,7 @@ import java.util.BitSet;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
-public final class Keyboard extends KeyAdapter implements IInputDevice {
+public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> {
 
     private final BitSet keybuf = new BitSet(256);
 
@@ -26,6 +26,7 @@ public final class Keyboard extends KeyAdapter implements IInputDevice {
     public void reset() {
     }
 
+    @Override
     public boolean isKeyDown(int keycode) {
         if (keycode < keybuf.length()) {
             return keybuf.get(keycode);
@@ -33,6 +34,7 @@ public final class Keyboard extends KeyAdapter implements IInputDevice {
         return false;
     }
 
+    @Override
     public boolean isKeyUp(int keycode) {
         if (keycode < keybuf.length()) {
             return !keybuf.get(keycode);
@@ -40,11 +42,17 @@ public final class Keyboard extends KeyAdapter implements IInputDevice {
         return true;
     }
 
+    @Override
     public boolean isKeyPressed(int keycode) {
         if (isKeyDown(keycode)) {
             keybuf.clear(keycode);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public KeyAdapter getRawInputDevice() {
+        return this;
     }
 }
