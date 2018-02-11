@@ -15,6 +15,7 @@ public final class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
     private int localX, localY;
     private int globalX, globalY;
     private int wheelRot;
+    private boolean inFrame;
 
     @Override
     public void reset() {
@@ -87,6 +88,11 @@ public final class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
             return Math.max(0, btnbuf[btn]);
         }
         return 0;
+    }
+    
+    @Override
+    public boolean isInFrame() {
+        return inFrame;
     }
 
     private void defaultMouseEventHandler(final MouseEvent e) {
