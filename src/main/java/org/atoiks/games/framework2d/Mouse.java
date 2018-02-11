@@ -124,6 +124,16 @@ public final class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
         defaultMouseEventHandler(e);
         btnbuf[e.getButton()] = 0;
     }
+    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        inFrame = true;
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent e) {
+        inFrame = false;
+    }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
