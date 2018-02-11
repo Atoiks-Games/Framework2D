@@ -82,4 +82,11 @@ public interface IMouse<T> extends IInputDevice<T> {
      * @return clicks of a button, has to be non-negative
      */
     public int getButtonClicks(int btn);
+    
+    /**
+     * Checks if mouse is inside frame
+     *
+     * @return true if mouse is inside frame
+     */
+    public boolean isInFrame();
 }
