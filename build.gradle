@@ -1,12 +1,41 @@
+import org.gradle.internal.os.OperatingSystem
+
 apply plugin: 'java'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
+
+switch (OperatingSystem.current()) {
+    case OperatingSystem.WINDOWS:
+        project.ext.lwjglNatives = "natives-windows"
+        break
+    case OperatingSystem.LINUX:
+        project.ext.lwjglNatives = "natives-linux"
+        break
+    case OperatingSystem.MAC_OS:
+        project.ext.lwjglNatives = "natives-macos"
+        break
+}
+
+project.ext.lwjglVersion = "3.1.6"
 
 repositories {
     jcenter()
 }
 
 dependencies {
+    compile "org.lwjgl:lwjgl:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-assimp:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-openal:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-opengl:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-stb:$lwjglVersion"
+    compile "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-assimp:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
+
     testCompile 'junit:junit:4.12'
 }
