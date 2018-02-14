@@ -1,4 +1,4 @@
-package org.atoiks.games.framework2d;
+package org.atoiks.games.framework2d.swing;
 
 import java.util.Arrays;
 import java.awt.MouseInfo;
@@ -6,7 +6,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 
-public final class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
+import org.atoiks.games.framework2d.IMouse;
+
+/* package */ class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
 
     public static final int BTN_PRESSED = -1;
 

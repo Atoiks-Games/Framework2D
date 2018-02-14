@@ -1,13 +1,13 @@
 package org.atoiks.games.framework2d;
 
-public abstract class AbstractFrame<T, G> implements IFrame<T> {
+public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
 
     protected boolean running = true;
 
-    protected SceneManager sceneMgr;
+    protected SceneManager<K, M, G> sceneMgr;
     protected float secsPerUpdate;
 
-    protected AbstractFrame(Float fps, SceneManager mgr) {
+    protected AbstractFrame(Float fps, SceneManager<K, M, G> mgr) {
         this.sceneMgr = mgr;
         this.secsPerUpdate = 1.0f / fps;
     }

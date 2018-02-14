@@ -27,6 +27,31 @@ public final class FrameInfo implements Serializable {
                 .toString();
     }
 
+    // ----- A bunch of getters
+    public String getTitle() {
+        return titleName;
+    }
+
+    public float getFps() {
+        return fps;
+    }
+
+    public Scene[] getScenes() {
+        return scenes;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public boolean isResizable() {
+        return resizable;
+    }
+
     // ----- A bunch of setters (nothing interesting)
 
     public FrameInfo setTitle(String name) {

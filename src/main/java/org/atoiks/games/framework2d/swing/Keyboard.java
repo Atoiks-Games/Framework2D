@@ -1,9 +1,11 @@
-package org.atoiks.games.framework2d;
+package org.atoiks.games.framework2d.swing;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
-public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> {
+import org.atoiks.games.framework2d.IKeyboard;
+
+/* package */ class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> {
 
     private final boolean[] keybuf = new boolean[256];
 

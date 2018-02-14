@@ -1,9 +1,11 @@
-package org.atoiks.games.framework2d;
+package org.atoiks.games.framework2d.swing;
 
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics2D;
+
+import org.atoiks.games.framework2d.*;
 
 /* package */ class SwingGraphics implements IGraphics<Graphics2D> {
 

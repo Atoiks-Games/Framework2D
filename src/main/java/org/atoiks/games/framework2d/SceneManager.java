@@ -3,7 +3,7 @@ package org.atoiks.games.framework2d;
 import java.util.Map;
 import java.util.HashMap;
 
-public final class SceneManager {
+public final class SceneManager<K, M, G> {
 
     private final Map<String, Object> res = new HashMap<>();
 
@@ -11,10 +11,12 @@ public final class SceneManager {
     private int sceneId;
     private boolean skipCycle;
 
-    /* package */ IKeyboard kbHandle;
-    /* package */ IMouse mouseHandle;
+    private final IKeyboard<K> kbHandle;
+    private final IMouse<M> mouseHandle;
 
-    public SceneManager(Scene... scenes) {
+    public SceneManager(IKeyboard<K> kb, IMouse<M> m, Scene... scenes) {
+        this.kbHandle = kb;
+        this.mouseHandle = m;
         this.scenes = scenes;
         this.sceneId = -1;
         this.skipCycle = false;
@@ -44,7 +46,7 @@ public final class SceneManager {
         return false;
     }
 
-    public <T> void renderCurrentScene(final IGraphics<T> g) {
+    public void renderCurrentScene(final IGraphics<? extends G> g) {
         if (sceneId >= 0 && sceneId < scenes.length) {
             this.scenes[sceneId].render(g);
         }
@@ -69,11 +71,11 @@ public final class SceneManager {
         mouseHandle.reset();
     }
 
-    public IKeyboard keyboard() {
+    public IKeyboard<? extends K> keyboard() {
         return kbHandle;
     }
 
-    public IMouse mouse() {
+    public IMouse<? extends M> mouse() {
         return mouseHandle;
     }
 
