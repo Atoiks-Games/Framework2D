@@ -1,24 +1,23 @@
 package org.atoiks.games.framework2d;
 
-import java.util.BitSet;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
 public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> {
 
-    private final BitSet keybuf = new BitSet(256);
+    private final boolean[] keybuf = new boolean[256];
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() < this.keybuf.size()) {
-            this.keybuf.set(e.getKeyCode());
+        if (e.getKeyCode() < keybuf.length) {
+            this.keybuf[e.getKeyCode()] = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() < this.keybuf.size()) {
-            this.keybuf.clear(e.getKeyCode());
+        if (e.getKeyCode() < keybuf.length) {
+            this.keybuf[e.getKeyCode()] = false;
         }
     }
 
@@ -28,16 +27,16 @@ public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> 
 
     @Override
     public boolean isKeyDown(int keycode) {
-        if (keycode < keybuf.size()) {
-            return keybuf.get(keycode);
+        if (keycode < keybuf.length) {
+            return keybuf[keycode];
         }
         return false;
     }
 
     @Override
     public boolean isKeyUp(int keycode) {
-        if (keycode < keybuf.size()) {
-            return !keybuf.get(keycode);
+        if (keycode < keybuf.length) {
+            return !keybuf[keycode];
         }
         return true;
     }
@@ -45,7 +44,7 @@ public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> 
     @Override
     public boolean isKeyPressed(int keycode) {
         if (isKeyDown(keycode)) {
-            keybuf.clear(keycode);
+            keybuf[keycode] = false;
             return true;
         }
         return false;
