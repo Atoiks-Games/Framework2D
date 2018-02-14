@@ -1,6 +1,6 @@
 package org.atoiks.games.framework2d;
 
-public abstract class AbstractFrame<T> implements IFrame<T> {
+public abstract class AbstractFrame<T, G> implements IFrame<T> {
 
     protected boolean running = true;
 

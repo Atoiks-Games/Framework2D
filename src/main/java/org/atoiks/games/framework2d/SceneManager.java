@@ -2,7 +2,6 @@ package org.atoiks.games.framework2d;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.awt.Graphics;
 
 public final class SceneManager {
 
@@ -45,7 +44,7 @@ public final class SceneManager {
         return false;
     }
 
-    public void renderCurrentScene(final Graphics g) {
+    public <T> void renderCurrentScene(final IGraphics<T> g) {
         if (sceneId >= 0 && sceneId < scenes.length) {
             this.scenes[sceneId].render(g);
         }

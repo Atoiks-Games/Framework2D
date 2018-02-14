@@ -1,7 +1,5 @@
 package org.atoiks.games.framework2d;
 
-import java.awt.Graphics;
-
 public abstract class Scene {
 
     protected SceneManager scene;
@@ -13,7 +11,7 @@ public abstract class Scene {
     /**
      * Renders on the screen
      */
-    public abstract void render(Graphics g);
+    public abstract <T> void render(IGraphics<T> g);
 
     /**
      * Updates the entities in the scene

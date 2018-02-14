@@ -3,13 +3,14 @@ package org.atoiks.games.framework2d;
 import java.awt.Toolkit;
 import java.awt.Graphics;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Frame extends AbstractFrame<JFrame> {
+public class Frame extends AbstractFrame<JFrame, Graphics2D> {
 
     private final JPanel canvas = new JPanel() {
 
@@ -18,12 +19,17 @@ public class Frame extends AbstractFrame<JFrame> {
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
-            sceneMgr.renderCurrentScene(g);
+
+            graphics.g = (Graphics2D) g;
+            graphics.width = this.getWidth();
+            graphics.height = this.getHeight();
+            sceneMgr.renderCurrentScene(graphics);
         }
     };
 
     private final Keyboard kb = new Keyboard();
     private final Mouse m = new Mouse();
+    private final SwingGraphics graphics = new SwingGraphics();
 
     private final JFrame frame;
 
