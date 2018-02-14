@@ -25,6 +25,8 @@ public interface IGraphics<T> {
     public void rotate(float angle, float x, float y);
 
     public void drawImage(Image img, float x, float y);
+    public void drawImage(Image img, float x, float y, Color bg);
+
     public void drawString(String str, float x, float y);
     public void drawLine(float x1, float y1, float x2, float y2);
 

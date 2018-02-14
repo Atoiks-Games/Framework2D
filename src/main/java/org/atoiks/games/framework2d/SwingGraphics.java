@@ -81,6 +81,11 @@ import java.awt.Graphics2D;
     }
 
     @Override
+    public void drawImage(Image img, float x, float y, Color bg) {
+        g.drawImage(img, (int) x, (int) y, bg, null);
+    }
+
+    @Override
     public void drawString(String str, float x, float y) {
         g.drawString(str, x, y);
     }
