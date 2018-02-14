@@ -28,7 +28,7 @@ public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> 
 
     @Override
     public boolean isKeyDown(int keycode) {
-        if (keycode < keybuf.length()) {
+        if (keycode < keybuf.size()) {
             return keybuf.get(keycode);
         }
         return false;
@@ -36,7 +36,7 @@ public final class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> 
 
     @Override
     public boolean isKeyUp(int keycode) {
-        if (keycode < keybuf.length()) {
+        if (keycode < keybuf.size()) {
             return !keybuf.get(keycode);
         }
         return true;
