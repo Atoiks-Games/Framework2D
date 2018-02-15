@@ -38,7 +38,7 @@ public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graph
     private final JFrame frame;
 
     public Frame(FrameInfo info) {
-        super(info.getFps(), new SceneManager(new Keyboard(), new Mouse(), info.getScenes()));
+        super(info.getFps(), new SceneManager<>(new Keyboard(), new Mouse(), info.getScenes()));
         frame = new JFrame(info.getTitle());
 
         frame.setContentPane(canvas);
