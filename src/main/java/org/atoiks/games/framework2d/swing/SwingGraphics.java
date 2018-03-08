@@ -78,6 +78,46 @@ import org.atoiks.games.framework2d.*;
     }
 
     @Override
+    public void drawImage(Image img, int x, int y) {
+        g.drawImage(img, x, y, null);
+    }
+
+    @Override
+    public void drawImage(Image img, int x, int y, Color bg) {
+        g.drawImage(img, x, y, bg, null);
+    }
+
+    @Override
+    public void drawString(String str, int x, int y) {
+        g.drawString(str, x, y);
+    }
+
+    @Override
+    public void drawLine(int x1, int y1, int x2, int y2) {
+        g.drawLine(x1, y1, x2, y2);
+    }
+
+    @Override
+    public void drawOval(int x1, int y1, int x2, int y2) {
+        g.drawOval(x1, y1, (x2 - x1), (y2 - y1));
+    }
+
+    @Override
+    public void fillOval(int x1, int y1, int x2, int y2) {
+        g.fillOval(x1, y1, (x2 - x1), (y2 - y1));
+    }
+
+    @Override
+    public void drawRect(int x1, int y1, int x2, int y2) {
+        g.drawRect(x1, y1, (x2 - x1), (y2 - y1));
+    }
+
+    @Override
+    public void fillRect(int x1, int y1, int x2, int y2) {
+        g.fillRect(x1, y1, (x2 - x1), (y2 - y1));
+    }
+
+    @Override
     public void drawImage(Image img, float x, float y) {
         g.drawImage(img, (int) x, (int) y, null);
     }

@@ -24,6 +24,18 @@ public interface IGraphics<T> {
     public void translate(float x, float y);
     public void rotate(float angle, float x, float y);
 
+    public void drawImage(Image img, int x, int y);
+    public void drawImage(Image img, int x, int y, Color bg);
+
+    public void drawString(String str, int x, int y);
+    public void drawLine(int x1, int y1, int x2, int y2);
+
+    public void drawOval(int x1, int y1, int x2, int y2);
+    public void fillOval(int x1, int y1, int x2, int y2);
+
+    public void drawRect(int x1, int y1, int x2, int y2);
+    public void fillRect(int x1, int y1, int x2, int y2);
+
     public void drawImage(Image img, float x, float y);
     public void drawImage(Image img, float x, float y, Color bg);
 
