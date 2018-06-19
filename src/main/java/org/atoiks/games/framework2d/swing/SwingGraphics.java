@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 
 import org.atoiks.games.framework2d.*;
 
@@ -155,5 +156,15 @@ import org.atoiks.games.framework2d.*;
     @Override
     public void fillRect(float x1, float y1, float x2, float y2) {
         g.fillRect((int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1));
+    }
+
+    @Override
+    public void drawPath2D(Path2D path) {
+        g.draw(path);
+    }
+
+    @Override
+    public void fillPath2D(Path2D path) {
+        g.fill(path);
     }
 }
