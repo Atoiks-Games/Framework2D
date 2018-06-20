@@ -170,9 +170,9 @@ import org.atoiks.games.framework2d.*;
 
     private Path2D makePolygon(float[] coords) {
         final int count = coords.length / 2;
-        if (count == 0) return;
-
         final Path2D.Float path = new Path2D.Float();
+
+        if (count == 0) return path;
 
         path.moveTo(coords[0], coords[1]);
         for (int i = 1; i < count; ++i) {
