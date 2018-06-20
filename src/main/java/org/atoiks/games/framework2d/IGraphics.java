@@ -41,6 +41,17 @@ public interface IGraphics<T> {
 
     public void drawString(String str, float x, float y);
     public void drawLine(float x1, float y1, float x2, float y2);
+    public default void drawPoints(final float[] coords) {
+        final int count = coords.length / 2;
+        if (count == 0) return;
+
+        for (int i = 0; i < count; ++i) {
+            final int offset = 2 * i;
+            final float k1 = coords[offset];
+            final float k2 = coords[offset + 1];
+            drawLine(k1, k2, k1, k2);
+        }
+    }
 
     public void drawOval(float x1, float y1, float x2, float y2);
     public void fillOval(float x1, float y1, float x2, float y2);
