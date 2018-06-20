@@ -63,7 +63,7 @@ public interface IGraphics<T> {
         final int count = coords.length / 2;
         if (count == 0) return;
 
-        for (int i = 0; i < count; ++i) {
+        for (int i = 0; i <= count; ++i) {
             final int pt1 = 2 * i;
             final int pt2 = 2 * (i + 1);
             drawLine(coords[pt1], coords[pt1 + 1], coords[pt2], coords[pt2 + 1]);
