@@ -159,7 +159,16 @@ import org.atoiks.games.framework2d.*;
     }
 
     @Override
+    public void drawPolygon(float[] coords) {
+        g.draw(makePolygon(coords));
+    }
+
+    @Override
     public void fillPolygon(float[] coords) {
+        g.fill(makePolygon(coords));
+    }
+
+    private Path2D makePolygon(float[] coords) {
         final int count = coords.length / 2;
         if (count == 0) return;
 
@@ -172,7 +181,6 @@ import org.atoiks.games.framework2d.*;
         }
         // Connect back to starting point
         path.closePath();
-
-        g.fill(path);
+        return path;
     }
 }
