@@ -159,12 +159,20 @@ import org.atoiks.games.framework2d.*;
     }
 
     @Override
-    public void drawPath2D(Path2D path) {
-        g.draw(path);
-    }
+    public void fillPolygon(float[] coords) {
+        final int count = coords.length / 2;
+        if (count == 0) return;
 
-    @Override
-    public void fillPath2D(Path2D path) {
+        final Path2D.Float path = new Path2D.Float();
+
+        path.moveTo(coords[0], coords[1]);
+        for (int i = 1; i < count; ++i) {
+            final int k = 2 * i;
+            path.lineTo(coords[k], coords[k + 1]);
+        }
+        // Connect back to starting point
+        path.closePath();
+
         g.fill(path);
     }
 }

@@ -3,7 +3,6 @@ package org.atoiks.games.framework2d;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.geom.Path2D;
 
 public interface IGraphics<T> {
 
@@ -49,6 +48,19 @@ public interface IGraphics<T> {
     public void drawRect(float x1, float y1, float x2, float y2);
     public void fillRect(float x1, float y1, float x2, float y2);
 
-    public void drawPath2D(Path2D path);
-    public void fillPath2D(Path2D path);
+    public default void drawPolygon(final float[] coords) {
+        final int count = coords.length / 2;
+        if (count == 0) return;
+
+        for (int i = 0; i < count; ++i) {
+            final int pt1 = 2 * i;
+            final int pt2 = 2 * (i + 1);
+            drawLine(coords[pt1], coords[pt1 + 1], coords[pt2], coords[pt2 + 1]);
+        }
+        // Connect the last and first point
+        final int pt1 = 2 * (count - 1);
+        drawLine(coords[pt1], coords[pt1 + 1], coords[0], coords[1]);
+    }
+
+    public void fillPolygon(float[] coords);
 }
