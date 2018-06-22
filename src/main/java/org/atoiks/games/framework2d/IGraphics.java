@@ -33,6 +33,13 @@ public interface IGraphics<T> {
     public void drawOval(int x1, int y1, int x2, int y2);
     public void fillOval(int x1, int y1, int x2, int y2);
 
+    public default void drawCircle(int x, int y, int r) {
+        drawOval(x - r, y - r, x + r, y + r);
+    }
+    public default void fillCircle(int x, int y, int r) {
+        fillOval(x - r, y - r, x + r, y + r);
+    }
+
     public void drawRect(int x1, int y1, int x2, int y2);
     public void fillRect(int x1, int y1, int x2, int y2);
 
