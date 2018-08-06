@@ -8,6 +8,9 @@ import org.atoiks.games.framework2d.IKeyboard;
 /* package */ class Keyboard extends KeyAdapter implements IKeyboard<KeyAdapter> {
 
     private final boolean[] keybuf = new boolean[256];
+    private final StringBuilder sb = new StringBuilder();
+
+    private boolean captureChars = false;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -20,6 +23,13 @@ import org.atoiks.games.framework2d.IKeyboard;
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() < keybuf.length) {
             this.keybuf[e.getKeyCode()] = false;
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (captureChars) {
+            sb.append(e.getKeyChar());
         }
     }
 
@@ -50,6 +60,22 @@ import org.atoiks.games.framework2d.IKeyboard;
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void captureTypedChars(boolean flag) {
+        if (!(captureChars = flag)) {
+            // if flag is false, discard the current char buffer
+            sb.setLength(0);
+        }
+    }
+
+    @Override
+    public String getTypedChars() {
+        final String ret = sb.toString();
+        // Clear buffer
+        sb.setLength(0);
+        return ret;
     }
 
     @Override
