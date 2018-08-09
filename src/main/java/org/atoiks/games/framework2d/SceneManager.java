@@ -17,12 +17,12 @@ public final class SceneManager<K, M, G> {
     public SceneManager(IKeyboard<K> kb, IMouse<M> m, FrameInfo info) {
         this.kbHandle = kb;
         this.mouseHandle = m;
-        this.scenes = scenes;
+        this.scenes = info.getScenes();
         this.sceneId = -1;
         this.skipCycle = false;
         this.res.putAll(info.res);
 
-        for (final Scene s : info.getScenes()) {
+        for (final Scene s : scenes) {
             s.attachSceneManager(this);
         }
     }
