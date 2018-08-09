@@ -57,6 +57,9 @@ public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graph
         });
         frame.addKeyListener(sceneMgr.keyboard().getRawInputDevice());
 
+        // Allow canvas to receive special keys (tab and shift and stuff)
+        frame.setFocusTraversalKeysEnabled(false);
+
         // Canvas Listeners
         canvas.addMouseListener(sceneMgr.mouse().getRawInputDevice());
         canvas.addMouseMotionListener(sceneMgr.mouse().getRawInputDevice());
