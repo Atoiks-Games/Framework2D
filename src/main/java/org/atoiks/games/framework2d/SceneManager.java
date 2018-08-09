@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public final class SceneManager<K, M, G> {
 
-    private final Map<String, ? extends Object> res = new HashMap<>();
+    private final Map<String, Object> res = new HashMap<>();
 
     private Scene[] scenes;
     private int sceneId;
@@ -14,14 +14,15 @@ public final class SceneManager<K, M, G> {
     private final IKeyboard<K> kbHandle;
     private final IMouse<M> mouseHandle;
 
-    public SceneManager(IKeyboard<K> kb, IMouse<M> m, Scene... scenes) {
+    public SceneManager(IKeyboard<K> kb, IMouse<M> m, FrameInfo info) {
         this.kbHandle = kb;
         this.mouseHandle = m;
         this.scenes = scenes;
         this.sceneId = -1;
         this.skipCycle = false;
+        this.res.putAll(info.res);
 
-        for (final Scene s : scenes) {
+        for (final Scene s : info.getScenes()) {
             s.attachSceneManager(this);
         }
     }
