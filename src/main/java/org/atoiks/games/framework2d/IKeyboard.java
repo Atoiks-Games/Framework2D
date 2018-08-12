@@ -25,7 +25,7 @@ public interface IKeyboard<T> extends IInputDevice<T> {
      *
      * @param kc - The keycode of the key
      *
-     * @return true if being held down
+     * @return true if typed
      */
     public boolean isKeyPressed(int kc);
 
