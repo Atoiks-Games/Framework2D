@@ -16,15 +16,20 @@ import org.atoiks.games.framework2d.IKeyboard;
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() < keybuf.length) {
-            this.keybuf[lastKey = e.getKeyCode()] = true;
+        final int k = e.getKeyCode();
+        if (k < keybuf.length) {
+            this.keybuf[lastKey = k] = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() < keybuf.length) {
-            this.keybuf[e.getKeyCode()] = false;
+        final int k = e.getKeyCode();
+        if (k < keybuf.length) {
+            this.keybuf[k] = false;
+            if (lastKey == k) {
+                lastKey = KeyEvent.VK_UNDEFINED;
+            }
         }
     }
 
@@ -37,9 +42,7 @@ import org.atoiks.games.framework2d.IKeyboard;
 
     @Override
     public int getLastDownKey() {
-        final int ret = lastKey;
-        lastKey = KeyEvent.VK_UNDEFINED;
-        return ret;
+        return lastKey;
     }
 
     @Override

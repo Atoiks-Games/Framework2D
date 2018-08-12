@@ -30,11 +30,7 @@ public interface IKeyboard<T> extends IInputDevice<T> {
     public boolean isKeyPressed(int kc);
 
     /**
-     * Returns the last held key. Calling this method will reset the internal
-     * state. If no keys were pressed during calls to this method,
-     * {@link java.awt.event.KeyEvent#VK_UNDEFINED} is returned.
-     *
-     * @return the last held key
+     * @return the last held key or VK_UNDEFINED if no key is pressed
      */
     public int getLastDownKey();
 
