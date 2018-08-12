@@ -30,6 +30,11 @@ public interface IKeyboard<T> extends IInputDevice<T> {
     public boolean isKeyPressed(int kc);
 
     /**
+     * @return the last held key
+     */
+    public int getLastDownKey();
+
+    /**
      * Decides whether or not typed characters are handled. In order for
      * {@link this#getTypedChars()} to return meaningful data, this
      * method must be called with {@code true} at least an update frame

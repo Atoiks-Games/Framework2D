@@ -12,10 +12,12 @@ import org.atoiks.games.framework2d.IKeyboard;
 
     private boolean captureChars = false;
 
+    private int lastKey = KeyEvent.VK_UNDEFINED;
+
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() < keybuf.length) {
-            this.keybuf[e.getKeyCode()] = true;
+            this.keybuf[lastKey = e.getKeyCode()] = true;
         }
     }
 
@@ -31,6 +33,11 @@ import org.atoiks.games.framework2d.IKeyboard;
         if (captureChars) {
             sb.append(e.getKeyChar());
         }
+    }
+
+    @Override
+    public int getLastDownKey() {
+        return lastKey;
     }
 
     @Override
