@@ -37,7 +37,9 @@ import org.atoiks.games.framework2d.IKeyboard;
 
     @Override
     public int getLastDownKey() {
-        return lastKey;
+        final int ret = lastKey;
+        lastKey = KeyEvent.VK_UNDEFINED;
+        return ret;
     }
 
     @Override
