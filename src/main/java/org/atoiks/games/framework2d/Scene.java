@@ -21,12 +21,4 @@ public abstract class Scene {
     public abstract boolean update(float dt);
 
     public abstract void resize(int x, int y);
-
-    public void leave() {
-        // Does nothing
-    }
-
-    public void enter(int previousSceneId) {
-        // Does nothing
-    }
 }

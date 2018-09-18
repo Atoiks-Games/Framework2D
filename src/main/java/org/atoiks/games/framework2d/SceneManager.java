@@ -5,9 +5,12 @@ import java.util.HashMap;
 
 public final class SceneManager<K, M, G> {
 
+    public static final int LOADER_SCENE_ID = -1;
+
     private final Map<String, Object> res = new HashMap<>();
 
-    private Scene[] scenes;
+    private Scene loader;
+    private GameScene[] scenes;
     private int sceneId;
     private boolean skipCycle;
 
@@ -17,18 +20,31 @@ public final class SceneManager<K, M, G> {
     public SceneManager(IKeyboard<K> kb, IMouse<M> m, FrameInfo info) {
         this.kbHandle = kb;
         this.mouseHandle = m;
-        this.scenes = info.getScenes();
-        this.sceneId = -1;
+        this.loader = info.getLoader();
+        this.scenes = info.getGameScenes();
+        this.sceneId = LOADER_SCENE_ID;
         this.skipCycle = false;
         this.res.putAll(info.res);
 
+        if (loader != null) loader.attachSceneManager(this);
         for (final Scene s : scenes) {
             s.attachSceneManager(this);
         }
     }
 
     public void switchToScene(final int id) {
-        if (sceneId >= 0 && sceneId < scenes.length) scenes[sceneId].leave();
+        if (sceneId == LOADER_SCENE_ID) {
+            // loaders do not have a leave method
+            // but doing so will trigger init
+            for (GameScene s : scenes) s.init();
+            // In addition, we will detach the loader scene
+            // in case someone decides to do switchToScene(LOADER_SCENE)
+            // (we would not want the loader to reload data)
+            this.loader = null;
+        } else if (sceneId >= 0 && sceneId < scenes.length) {
+            scenes[sceneId].leave();
+        }
+
         if (id >= 0 && id < scenes.length) scenes[id].enter(sceneId);
         sceneId = id;
         skipCycle = true;
@@ -48,18 +64,32 @@ public final class SceneManager<K, M, G> {
     }
 
     public void renderCurrentScene(final IGraphics<? extends G> g) {
+        if (sceneId == LOADER_SCENE_ID && loader != null) {
+            loader.render(g);
+            return;
+        }
+
         if (sceneId >= 0 && sceneId < scenes.length) {
             this.scenes[sceneId].render(g);
         }
     }
 
     public void resizeCurrentScene(final int x, final int y) {
+        if (sceneId == LOADER_SCENE_ID && loader != null) {
+            loader.resize(x, y);
+            return;
+        }
+
         if (sceneId >= 0 && sceneId < scenes.length) {
             this.scenes[sceneId].resize(x, y);
         }
     }
 
     public boolean updateCurrentScene(final float dt) {
+        if (sceneId == LOADER_SCENE_ID && loader != null) {
+            return loader.update(dt);
+        }
+
         if (sceneId >= 0 && sceneId < scenes.length) {
             return this.scenes[sceneId].update(dt);
         }
@@ -82,5 +112,11 @@ public final class SceneManager<K, M, G> {
 
     public Map<String, ? extends Object> resources() {
         return res;
+    }
+
+    /* package */ void callDeinit() {
+        for (GameScene s : scenes) {
+            s.deinit();
+        }
     }
 }

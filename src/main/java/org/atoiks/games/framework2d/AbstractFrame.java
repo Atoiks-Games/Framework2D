@@ -13,7 +13,6 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
     }
 
     public void init() {
-        sceneMgr.switchToScene(0);
     }
 
     public void loop() {
@@ -53,6 +52,8 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
     public void close() {
         // Ensures leave for Scene gets called
         sceneMgr.switchToScene(-1);
+        // Deinitalize all game scenes
+        sceneMgr.callDeinit();
     }
 
     @Override
