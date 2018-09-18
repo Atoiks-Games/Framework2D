@@ -2,6 +2,8 @@ package org.atoiks.games.framework2d;
 
 public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
 
+    private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
+
     protected boolean running = true;
 
     protected SceneManager<K, M, G> sceneMgr;
@@ -13,6 +15,13 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
     }
 
     public void init() {
+        if (ON_MAC) {
+            try {
+                Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false");
+            } catch (Exception ex) {
+                //
+            }
+        }
     }
 
     public void loop() {
@@ -54,6 +63,15 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
         sceneMgr.switchToScene(-1);
         // Deinitalize all game scenes
         sceneMgr.callDeinit();
+
+        // Restore the mac stuff
+        if (ON_MAC) {
+            try {
+                Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true");
+            } catch (Exception ex) {
+                //
+            }
+        }
     }
 
     @Override
