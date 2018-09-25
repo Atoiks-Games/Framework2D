@@ -91,7 +91,7 @@ import org.atoiks.games.framework2d.IMouse;
         }
         return 0;
     }
-    
+
     @Override
     public boolean isInFrame() {
         return inFrame;
@@ -126,12 +126,12 @@ import org.atoiks.games.framework2d.IMouse;
         defaultMouseEventHandler(e);
         btnbuf[e.getButton()] = 0;
     }
-    
+
     @Override
     public void mouseEntered(MouseEvent e) {
         inFrame = true;
     }
-    
+
     @Override
     public void mouseExited(MouseEvent e) {
         inFrame = false;

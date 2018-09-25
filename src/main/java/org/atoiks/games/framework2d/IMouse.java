@@ -8,7 +8,7 @@ public interface IMouse<T> extends IInputDevice<T> {
      * @return x relative to frame
      */
     public int getLocalX();
-    
+
     /**
      * Returns Y-coordinate of mouse relative to frame
      *
@@ -22,7 +22,7 @@ public interface IMouse<T> extends IInputDevice<T> {
      * @return x relative to screen
      */
     public int getGlobalX();
-    
+
     /**
      * Returns Y-coordinate of mouse relative to screen
      *
@@ -82,7 +82,7 @@ public interface IMouse<T> extends IInputDevice<T> {
      * @return clicks of a button, has to be non-negative
      */
     public int getButtonClicks(int btn);
-    
+
     /**
      * Checks if mouse is inside frame
      *

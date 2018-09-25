@@ -34,7 +34,7 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
             final double elapsed = now - previous;
             previous = now;
             steps += elapsed;
-            
+
             sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
             while (steps >= secsPerUpdate) {
                 if (!sceneMgr.updateCurrentScene(secsPerUpdate / 1000)) {
