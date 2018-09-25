@@ -26,6 +26,8 @@ public interface IGraphics<T> {
 
     public void drawImage(Image img, int x, int y);
     public void drawImage(Image img, int x, int y, Color bg);
+    public void drawImage(Image img, int x1, int y1, int x2, int y2);
+    public void drawImage(Image img, int x1, int y1, int x2, int y2, Color bg);
 
     public void drawString(String str, int x, int y);
     public void drawLine(int x1, int y1, int x2, int y2);
@@ -45,6 +47,8 @@ public interface IGraphics<T> {
 
     public void drawImage(Image img, float x, float y);
     public void drawImage(Image img, float x, float y, Color bg);
+    public void drawImage(Image img, float x1, float y1, float x2, float y2);
+    public void drawImage(Image img, float x1, float y1, float x2, float y2, Color bg);
 
     public void drawString(String str, float x, float y);
     public void drawLine(float x1, float y1, float x2, float y2);
