@@ -4,6 +4,8 @@ import java.awt.Toolkit;
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
@@ -26,7 +28,9 @@ public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graph
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
 
-            graphics.g = (Graphics2D) g;
+            final Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+            graphics.g = g2d;
             graphics.width = this.getWidth();
             graphics.height = this.getHeight();
             sceneMgr.renderCurrentScene(graphics);
