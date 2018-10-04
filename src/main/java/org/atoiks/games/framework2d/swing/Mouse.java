@@ -22,8 +22,6 @@ import org.atoiks.games.framework2d.IMouse;
     @Override
     public void reset() {
         Arrays.fill(btnbuf, 0);
-        localX = localY = -1;
-        globalX = globalY = -1;
         wheelRot = 0;
     }
 
