@@ -108,6 +108,11 @@ import org.atoiks.games.framework2d.IMouse;
     }
 
     @Override
+    public void mouseDragged(MouseEvent e) {
+        defaultMouseEventHandler(e);
+    }
+
+    @Override
     public void mouseClicked(MouseEvent e) {
         defaultMouseEventHandler(e);
         btnbuf[e.getButton()] = e.getClickCount();
