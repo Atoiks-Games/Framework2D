@@ -9,7 +9,7 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
     protected SceneManager<K, M, G> sceneMgr;
     protected float secsPerUpdate;
 
-    protected AbstractFrame(Float fps, SceneManager<K, M, G> mgr) {
+    protected AbstractFrame(float fps, SceneManager<K, M, G> mgr) {
         this.sceneMgr = mgr;
         this.secsPerUpdate = 1.0f / fps;
     }
