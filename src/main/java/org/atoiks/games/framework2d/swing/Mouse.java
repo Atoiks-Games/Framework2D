@@ -18,11 +18,13 @@ import org.atoiks.games.framework2d.IMouse;
     private int globalX, globalY;
     private int wheelRot;
     private boolean inFrame;
+    private boolean moved;
 
     @Override
     public void reset() {
         Arrays.fill(btnbuf, 0);
         wheelRot = 0;
+        moved = false;
     }
 
     @Override
@@ -95,6 +97,11 @@ import org.atoiks.games.framework2d.IMouse;
         return inFrame;
     }
 
+    @Override
+    public boolean positionChanged() {
+        return moved;
+    }
+
     private void defaultMouseEventHandler(final MouseEvent e) {
         localX = e.getX();
         localY = e.getY();
@@ -105,12 +112,14 @@ import org.atoiks.games.framework2d.IMouse;
     @Override
     public void mouseMoved(MouseEvent e) {
         defaultMouseEventHandler(e);
+        moved = true;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         defaultMouseEventHandler(e);
         btnbuf[e.getButton()] = BTN_PRESSED;
+        moved = true;
     }
 
     @Override

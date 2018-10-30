@@ -89,4 +89,9 @@ public interface IMouse<T> extends IInputDevice<T> {
      * @return true if mouse is inside frame
      */
     public boolean isInFrame();
+
+    /**
+     * @return true if mouse moved during this update
+     */
+    public boolean positionChanged();
 }
