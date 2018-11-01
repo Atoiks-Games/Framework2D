@@ -7,11 +7,13 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
     protected boolean running = true;
 
     protected SceneManager<K, M, G> sceneMgr;
-    protected float secsPerUpdate;
+    private final float secPerUpdate;
+    private final float msPerUpdate;
 
-    protected AbstractFrame(float fps, SceneManager<K, M, G> mgr) {
+    protected AbstractFrame(final float fps, SceneManager<K, M, G> mgr) {
         this.sceneMgr = mgr;
-        this.secsPerUpdate = 1.0f / fps;
+        this.secPerUpdate = 1.0f / fps;
+        this.msPerUpdate = 1000.0f / fps;
     }
 
     public void init() {
@@ -36,8 +38,8 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
             steps += elapsed;
 
             sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
-            while (steps >= secsPerUpdate) {
-                if (!sceneMgr.updateCurrentScene(secsPerUpdate / 1000)) {
+            while (steps >= msPerUpdate) {
+                if (!sceneMgr.updateCurrentScene(secPerUpdate)) {
                     return;
                 }
 
@@ -50,7 +52,7 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
                     steps = 0.0f;
                     continue outer; // Restart entire process
                 }
-                steps -= secsPerUpdate;
+                steps -= msPerUpdate;
             }
 
             // Force redraw here

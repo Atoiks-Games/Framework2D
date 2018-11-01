@@ -16,6 +16,7 @@ public abstract class Scene {
     /**
      * Updates the entities in the scene
      *
+     * @param dt elapsed time measured in seconds
      * @return true if game should continue
      */
     public abstract boolean update(float dt);
