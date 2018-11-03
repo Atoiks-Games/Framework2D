@@ -1,16 +1,16 @@
 package org.atoiks.games.framework2d;
 
-public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
+public abstract class AbstractFrame<T, G> implements IFrame<T> {
 
     private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
     protected boolean running = true;
 
-    protected SceneManager<K, M, G> sceneMgr;
+    protected SceneManager<G> sceneMgr;
     private final float secPerUpdate;
     private final float msPerUpdate;
 
-    protected AbstractFrame(final float fps, SceneManager<K, M, G> mgr) {
+    protected AbstractFrame(final float fps, SceneManager<G> mgr) {
         this.sceneMgr = mgr;
         this.secPerUpdate = 1.0f / fps;
         this.msPerUpdate = 1000.0f / fps;
@@ -43,8 +43,8 @@ public abstract class AbstractFrame<T, K, M, G> implements IFrame<T> {
                     return;
                 }
 
-                // Reset input devices
-                sceneMgr.resetInputDevices();
+                // Invoke frame update on input devices
+                Input.invokeFrameUpdate();
 
                 if (sceneMgr.shouldSkipCycle()) {
                     // Reset time info

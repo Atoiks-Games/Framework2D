@@ -1,6 +1,6 @@
 package org.atoiks.games.framework2d;
 
-public interface IMouse<T> extends IInputDevice<T> {
+public interface IMouse extends IInputDevice {
 
     /**
      * Returns X-coordinate of mouse relative to frame

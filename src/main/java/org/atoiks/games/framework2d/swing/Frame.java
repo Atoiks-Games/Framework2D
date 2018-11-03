@@ -14,11 +14,12 @@ import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
 
-public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graphics2D> {
+public class Frame extends AbstractFrame<JFrame, Graphics2D> {
 
     private final JPanel canvas = new JPanel() {
 
@@ -42,7 +43,7 @@ public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graph
     private final JFrame frame;
 
     public Frame(FrameInfo info) {
-        super(info.getFps(), new SceneManager<>(new Keyboard(), new Mouse(), info));
+        super(info.getFps(), new SceneManager<>(info));
         frame = new JFrame(info.getTitle());
 
         frame.setContentPane(canvas);
@@ -52,6 +53,13 @@ public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graph
         frame.pack();
         frame.setLocationRelativeTo(null);
 
+        // Create input devices and give them to input manager
+        final Keyboard compKeyboard = new Keyboard();
+        final Mouse compMouse = new Mouse();
+
+        Input.provideKeyboard(compKeyboard);
+        Input.provideMouse(compMouse);
+
         // Frame Listeners
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -59,15 +67,15 @@ public class Frame extends AbstractFrame<JFrame, KeyAdapter, MouseAdapter, Graph
                 Frame.this.running = false;
             }
         });
-        frame.addKeyListener(sceneMgr.keyboard().getRawInputDevice());
+        frame.addKeyListener(compKeyboard);
 
         // Allow canvas to receive special keys (tab and shift and stuff)
         frame.setFocusTraversalKeysEnabled(false);
 
         // Canvas Listeners
-        canvas.addMouseListener(sceneMgr.mouse().getRawInputDevice());
-        canvas.addMouseMotionListener(sceneMgr.mouse().getRawInputDevice());
-        canvas.addMouseWheelListener(sceneMgr.mouse().getRawInputDevice());
+        canvas.addMouseListener(compMouse);
+        canvas.addMouseMotionListener(compMouse);
+        canvas.addMouseWheelListener(compMouse);
     }
 
     @Override

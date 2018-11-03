@@ -3,7 +3,7 @@ package org.atoiks.games.framework2d;
 import java.util.Map;
 import java.util.HashMap;
 
-public final class SceneManager<K, M, G> {
+public final class SceneManager<G> {
 
     public static final int LOADER_SCENE_ID = -1;
 
@@ -14,12 +14,7 @@ public final class SceneManager<K, M, G> {
     private int sceneId;
     private boolean skipCycle;
 
-    private final IKeyboard<K> kbHandle;
-    private final IMouse<M> mouseHandle;
-
-    public SceneManager(IKeyboard<K> kb, IMouse<M> m, FrameInfo info) {
-        this.kbHandle = kb;
-        this.mouseHandle = m;
+    public SceneManager(FrameInfo info) {
         this.loader = info.getLoader();
         this.scenes = info.getGameScenes();
         this.sceneId = LOADER_SCENE_ID;
@@ -95,19 +90,6 @@ public final class SceneManager<K, M, G> {
         }
         // Even though there is no frame, the app is still running
         return true;
-    }
-
-    public void resetInputDevices() {
-        kbHandle.reset();
-        mouseHandle.reset();
-    }
-
-    public IKeyboard<? extends K> keyboard() {
-        return kbHandle;
-    }
-
-    public IMouse<? extends M> mouse() {
-        return mouseHandle;
     }
 
     public Map<String, ? extends Object> resources() {

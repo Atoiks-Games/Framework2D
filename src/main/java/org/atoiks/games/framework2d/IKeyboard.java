@@ -1,6 +1,6 @@
 package org.atoiks.games.framework2d;
 
-public interface IKeyboard<T> extends IInputDevice<T> {
+public interface IKeyboard extends IInputDevice {
 
     /**
      * Checks if key is not being pressed

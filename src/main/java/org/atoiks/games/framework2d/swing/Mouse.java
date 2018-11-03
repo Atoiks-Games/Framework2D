@@ -8,7 +8,7 @@ import java.awt.event.MouseWheelEvent;
 
 import org.atoiks.games.framework2d.IMouse;
 
-/* package */ class Mouse extends MouseAdapter implements IMouse<MouseAdapter> {
+/* package */ class Mouse extends MouseAdapter implements IMouse {
 
     public static final int BTN_PRESSED = -1;
 
@@ -22,6 +22,16 @@ import org.atoiks.games.framework2d.IMouse;
 
     @Override
     public void reset() {
+        Arrays.fill(btnbuf, 0);
+        wheelRot = 0;
+        moved = false;
+
+        localX = localY = globalX = globalY = 0;
+        inFrame = false;
+    }
+
+    @Override
+    public void update() {
         Arrays.fill(btnbuf, 0);
         wheelRot = 0;
         moved = false;
@@ -153,10 +163,5 @@ import org.atoiks.games.framework2d.IMouse;
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         wheelRot = e.getWheelRotation();
-    }
-
-    @Override
-    public MouseAdapter getRawInputDevice() {
-        return this;
     }
 }

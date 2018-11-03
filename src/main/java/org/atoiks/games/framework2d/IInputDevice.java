@@ -1,8 +1,14 @@
 package org.atoiks.games.framework2d;
 
-public interface IInputDevice<T> {
+public interface IInputDevice {
 
+    /**
+     * Resets the internal state of the input device
+     */
     public void reset();
 
-    public T getRawInputDevice();
+    /**
+     * Called once per update frame
+     */
+    public void update();
 }
