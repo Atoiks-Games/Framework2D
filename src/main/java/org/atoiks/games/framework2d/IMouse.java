@@ -93,5 +93,5 @@ public interface IMouse extends IInputDevice {
     /**
      * @return true if mouse moved during this update
      */
-    public boolean positionChanged();
+    public boolean mouseMoved();
 }

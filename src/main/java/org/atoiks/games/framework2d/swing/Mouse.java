@@ -108,7 +108,7 @@ import org.atoiks.games.framework2d.IMouse;
     }
 
     @Override
-    public boolean positionChanged() {
+    public boolean mouseMoved() {
         return moved;
     }
 

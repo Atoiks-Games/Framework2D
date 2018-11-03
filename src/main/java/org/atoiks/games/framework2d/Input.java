@@ -127,31 +127,31 @@ public final class Input {
         return compMouse.getWheelRotation();
     }
 
-    public static boolean isButtonUp(int btn) {
+    public static boolean isMouseButtonUp(int btn) {
         return compMouse.isButtonUp(btn);
     }
 
-    public static boolean isButtonDown(int btn) {
+    public static boolean isMouseButtonDown(int btn) {
         return compMouse.isButtonDown(btn);
     }
 
-    public static boolean isButtonClicked(int btn) {
+    public static boolean isMouseButtonClicked(int btn) {
         return compMouse.isButtonClicked(btn);
     }
 
-    public static boolean isButtonClicked(int btn, int clicks) {
+    public static boolean isMouseButtonClicked(int btn, int clicks) {
         return compMouse.isButtonClicked(btn, clicks);
     }
 
-    public static int getButtonClicks(int btn) {
+    public static int getMouseButtonClicks(int btn) {
         return compMouse.getButtonClicks(btn);
     }
 
-    public static boolean isInFrame() {
+    public static boolean isMouseInFrame() {
         return compMouse.isInFrame();
     }
 
-    public static boolean positionChanged() {
-        return compMouse.positionChanged();
+    public static boolean mouseMoved() {
+        return compMouse.mouseMoved();
     }
 }
