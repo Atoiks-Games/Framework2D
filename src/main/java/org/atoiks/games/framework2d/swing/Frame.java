@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -41,6 +43,9 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
     private final SwingGraphics graphics = new SwingGraphics();
 
     private final JFrame frame;
+
+    private boolean shouldCallResize = true;
+    private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
 
     public Frame(FrameInfo info) {
         super(info.getFps(), new SceneManager<>(info));
@@ -79,6 +84,12 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
         canvas.addMouseListener(compMouse);
         canvas.addMouseMotionListener(compMouse);
         canvas.addMouseWheelListener(compMouse);
+        canvas.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent evt) {
+                shouldCallResize = true;
+            }
+        });
     }
 
     @Override
@@ -101,6 +112,16 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
             //
             // Similar to the bug link (except for it throws at a different path)
             // https://bugs.java.com/view_bug.do?bug_id=JDK-8158495
+        }
+    }
+
+    @Override
+    protected void resizeGame() {
+        final int currentSceneId = sceneMgr.getCurrentSceneId();
+        if (shouldCallResize || lastSceneId != currentSceneId) {
+            shouldCallResize = false;
+            lastSceneId = currentSceneId;
+            sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
         }
     }
 

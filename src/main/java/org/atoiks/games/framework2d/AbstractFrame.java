@@ -37,7 +37,7 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
             previous = now;
             steps += elapsed;
 
-            sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
+            resizeGame();
             while (steps >= msPerUpdate) {
                 if (!sceneMgr.updateCurrentScene(secPerUpdate)) {
                     return;
@@ -84,6 +84,8 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
     protected abstract int getWidth();
 
     protected abstract int getHeight();
+
+    protected abstract void resizeGame();
 
     protected abstract void renderGame();
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 public final class SceneManager<G> {
 
     public static final int LOADER_SCENE_ID = -1;
+    public static final int UNKNOWN_SCENE_ID = -2;
 
     private final Map<String, Object> res = new HashMap<>();
 
@@ -47,6 +48,10 @@ public final class SceneManager<G> {
 
     public void gotoNextScene() {
         switchToScene(sceneId + 1);
+    }
+
+    public int getCurrentSceneId() {
+        return sceneId;
     }
 
     public boolean shouldSkipCycle() {
