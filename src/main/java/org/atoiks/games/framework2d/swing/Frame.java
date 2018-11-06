@@ -1,14 +1,11 @@
 package org.atoiks.games.framework2d.swing;
 
-import java.awt.Toolkit;
 import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
