@@ -49,7 +49,10 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setResizable(info.isResizable());
+
         canvas.setPreferredSize(new Dimension(info.getWidth(), info.getHeight()));
+        canvas.setIgnoreRepaint(true);
+
         frame.pack();
         frame.setLocationRelativeTo(null);
 
@@ -90,8 +93,7 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
 
     @Override
     protected void renderGame() {
-        canvas.repaint();
-        Toolkit.getDefaultToolkit().sync();
+        canvas.paintImmediately(canvas.getBounds());
     }
 
     @Override
