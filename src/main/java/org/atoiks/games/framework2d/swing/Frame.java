@@ -94,12 +94,12 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
 
     @Override
     protected int getWidth() {
-        return canvas.getPreferredSize().width;
+        return canvas.getBounds().width;
     }
 
     @Override
     protected int getHeight() {
-        return canvas.getPreferredSize().height;
+        return canvas.getBounds().height;
     }
 
     @Override
