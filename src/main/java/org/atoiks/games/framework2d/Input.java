@@ -139,14 +139,6 @@ public final class Input {
         return compMouse.isButtonClicked(btn);
     }
 
-    public static boolean isMouseButtonClicked(int btn, int clicks) {
-        return compMouse.isButtonClicked(btn, clicks);
-    }
-
-    public static int getMouseButtonClicks(int btn) {
-        return compMouse.getButtonClicks(btn);
-    }
-
     public static boolean isMouseInFrame() {
         return compMouse.isInFrame();
     }

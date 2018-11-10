@@ -10,9 +10,12 @@ import org.atoiks.games.framework2d.IMouse;
 
 /* package */ class Mouse extends MouseAdapter implements IMouse {
 
-    public static final int BTN_PRESSED = -1;
+    private enum MouseState {
+        RELEASED, HELD, PRESSED;
+    }
 
-    private final int[] btnbuf = new int[MouseInfo.getNumberOfButtons()];
+    private final boolean[] state;
+    private final MouseState[] poll;
 
     private int localX, localY;
     private int globalX, globalY;
@@ -20,9 +23,16 @@ import org.atoiks.games.framework2d.IMouse;
     private boolean inFrame;
     private boolean moved;
 
+    public Mouse() {
+        final int btns = MouseInfo.getNumberOfButtons();
+        state = new boolean[btns];
+        poll = new MouseState[btns];
+        Arrays.fill(poll, MouseState.RELEASED);
+    }
+
     @Override
     public void reset() {
-        Arrays.fill(btnbuf, 0);
+        Arrays.fill(poll, MouseState.RELEASED);
         wheelRot = 0;
         moved = false;
 
@@ -31,10 +41,18 @@ import org.atoiks.games.framework2d.IMouse;
     }
 
     @Override
-    public void update() {
-        Arrays.fill(btnbuf, 0);
+    public synchronized void update() {
         wheelRot = 0;
         moved = false;
+
+        final int size = poll.length;
+        for (int i = 0; i < size; ++i) {
+            if (state[i]) {
+                poll[i] = poll[i] == MouseState.RELEASED ? MouseState.PRESSED : MouseState.HELD;
+            } else {
+                poll[i] = MouseState.RELEASED;
+            }
+        }
     }
 
     @Override
@@ -64,42 +82,27 @@ import org.atoiks.games.framework2d.IMouse;
 
     @Override
     public boolean isButtonDown(int btn) {
-        if (btn < btnbuf.length) {
-            return btnbuf[btn] == BTN_PRESSED;
+        if (btn < poll.length) {
+            final MouseState st = poll[btn];
+            return st == MouseState.HELD || st == MouseState.PRESSED;
         }
         return false;
     }
 
     @Override
     public boolean isButtonUp(int btn) {
-        if (btn < btnbuf.length) {
-            return btnbuf[btn] == 0;
+        if (btn < poll.length) {
+            return poll[btn] == MouseState.RELEASED;
         }
         return false;
     }
 
     @Override
     public boolean isButtonClicked(int btn) {
-        if (btn < btnbuf.length) {
-            return btnbuf[btn] > 0;
+        if (btn < poll.length) {
+            return poll[btn] == MouseState.PRESSED;
         }
         return false;
-    }
-
-    @Override
-    public boolean isButtonClicked(int btn, int clicks) {
-        if (btn < btnbuf.length) {
-            return btnbuf[btn] == clicks;
-        }
-        return false;
-    }
-
-    @Override
-    public int getButtonClicks(int btn) {
-        if (btn < btnbuf.length) {
-            return Math.max(0, btnbuf[btn]);
-        }
-        return 0;
     }
 
     @Override
@@ -112,42 +115,37 @@ import org.atoiks.games.framework2d.IMouse;
         return moved;
     }
 
-    private void defaultMouseEventHandler(final MouseEvent e) {
+    private synchronized void defaultMouseEventHandler(final MouseEvent e) {
         localX = e.getX();
         localY = e.getY();
         globalX = e.getXOnScreen();
         globalY = e.getYOnScreen();
+        moved = true;
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         defaultMouseEventHandler(e);
-        moved = true;
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         defaultMouseEventHandler(e);
-        btnbuf[e.getButton()] = BTN_PRESSED;
-        moved = true;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        defaultMouseEventHandler(e);
-        btnbuf[e.getButton()] = e.getClickCount();
+        // click status is set in update method
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        defaultMouseEventHandler(e);
-        btnbuf[e.getButton()] = BTN_PRESSED;
+        state[e.getButton()] = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        defaultMouseEventHandler(e);
-        btnbuf[e.getButton()] = 0;
+        state[e.getButton()] = false;
     }
 
     @Override

@@ -65,25 +65,6 @@ public interface IMouse extends IInputDevice {
     public boolean isButtonClicked(int btn);
 
     /**
-     * Checks is the button was clicked a certain amount of times
-     *
-     * @param btn - The mouse button
-     * @param clicks - The amount of clicks
-     *
-     * @return if button was clicked n-times
-     */
-    public boolean isButtonClicked(int btn, int clicks);
-
-    /**
-     * Get the amount of clicks of a button
-     *
-     * @param btn - The mouse button
-     *
-     * @return clicks of a button, has to be non-negative
-     */
-    public int getButtonClicks(int btn);
-
-    /**
      * Checks if mouse is inside frame
      *
      * @return true if mouse is inside frame
