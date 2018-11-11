@@ -103,12 +103,15 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
     protected void renderGame() {
         try {
             canvas.paintImmediately(canvas.getBounds());
-        } catch (ClassCastException ex) {
+        } catch (ClassCastException | NullPointerException ex) {
             // Swallow this exception:
             // sun.java2d.NullSurfaceData cannot be cast to sun.java2d.opengl.OGLSurfaceData
             //
             // Similar to the bug link (except for it throws at a different path)
             // https://bugs.java.com/view_bug.do?bug_id=JDK-8158495
+            //
+            // NullPointerException, occurs at drawGlyphList in java2d sth..
+            // assuming it happens when font is not ready yet
         }
     }
 
