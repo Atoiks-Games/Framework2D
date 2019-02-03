@@ -24,6 +24,8 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
                 //
             }
         }
+
+        this.sceneMgr.callLoaderInit();
     }
 
     public void loop() {
@@ -64,7 +66,9 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
         // Ensures leave for Scene gets called
         sceneMgr.switchToScene(-1);
         // Deinitalize all game scenes
-        sceneMgr.callDeinit();
+        sceneMgr.callGameSceneDeinit();
+        // Deinitialize loader
+        sceneMgr.callLoaderDeinit();
 
         // Restore the mac stuff
         if (ON_MAC) {

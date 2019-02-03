@@ -21,5 +21,34 @@ public abstract class Scene {
      */
     public abstract boolean update(float dt);
 
+    /**
+     * Called when screen is resized
+     *
+     * @param x new width in pixels
+     * @param y new height in pixels
+     */
     public abstract void resize(int x, int y);
+
+    /**
+     * The initializer of the scene. Guarantee called before the scene is
+     * entered
+     */
+    public void init() {
+        // Does nothing
+    }
+
+    /**
+     * The clean up method of the scene. Guarantee called when the game is
+     * shutting down
+     */
+    public void deinit() {
+        // Does nothing
+    }
+
+    /**
+     * Called during a scene transition, before entering the next scene.
+     */
+    public void leave() {
+        // Does nothing
+    }
 }
