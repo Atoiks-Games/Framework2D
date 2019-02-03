@@ -28,26 +28,33 @@ public final class SceneManager<G> {
         }
     }
 
-    public void switchToScene(final int id) {
+    public boolean switchToScene(final int id) {
         if (sceneId == LOADER_SCENE_ID) {
-            // loaders do not have a leave method
-            // but doing so will trigger init
-            for (GameScene s : scenes) s.init();
-            // In addition, we will detach the loader scene
-            // in case someone decides to do switchToScene(LOADER_SCENE)
-            // (we would not want the loader to reload data)
-            this.loader = null;
+            // leave the loader and trigger init of game scenes
+            this.loader.leave();
+            for (final GameScene s : scenes) {
+                s.init();
+            }
         } else if (sceneId >= 0 && sceneId < scenes.length) {
             scenes[sceneId].leave();
         }
 
-        if (id >= 0 && id < scenes.length) scenes[id].enter(sceneId);
-        sceneId = id;
-        skipCycle = true;
+        if (id >= 0 && id < scenes.length) {
+            scenes[id].enter(sceneId);
+            sceneId = id;
+            skipCycle = true;
+            return true;
+        }
+
+        return false;
     }
 
-    public void gotoNextScene() {
-        switchToScene(sceneId + 1);
+    public boolean gotoNextScene() {
+        return switchToScene(sceneId + 1);
+    }
+
+    public boolean restartCurrentScene() {
+        return switchToScene(sceneId);
     }
 
     public int getCurrentSceneId() {
@@ -64,7 +71,7 @@ public final class SceneManager<G> {
     }
 
     public void renderCurrentScene(final IGraphics<? extends G> g) {
-        if (sceneId == LOADER_SCENE_ID && loader != null) {
+        if (sceneId == LOADER_SCENE_ID) {
             loader.render(g);
             return;
         }
@@ -75,7 +82,7 @@ public final class SceneManager<G> {
     }
 
     public void resizeCurrentScene(final int x, final int y) {
-        if (sceneId == LOADER_SCENE_ID && loader != null) {
+        if (sceneId == LOADER_SCENE_ID) {
             loader.resize(x, y);
             return;
         }
@@ -86,7 +93,7 @@ public final class SceneManager<G> {
     }
 
     public boolean updateCurrentScene(final float dt) {
-        if (sceneId == LOADER_SCENE_ID && loader != null) {
+        if (sceneId == LOADER_SCENE_ID) {
             return loader.update(dt);
         }
 
@@ -101,9 +108,17 @@ public final class SceneManager<G> {
         return res;
     }
 
-    /* package */ void callDeinit() {
-        for (GameScene s : scenes) {
+    /* package */ void callGameSceneDeinit() {
+        for (final GameScene s : scenes) {
             s.deinit();
         }
+    }
+
+    /* package */ void callLoaderInit() {
+        loader.init();
+    }
+
+    /* package */ void callLoaderDeinit() {
+        loader.deinit();
     }
 }
