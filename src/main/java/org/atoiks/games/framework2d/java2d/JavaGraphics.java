@@ -1,4 +1,4 @@
-package org.atoiks.games.framework2d.swing;
+package org.atoiks.games.framework2d.java2d;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -8,7 +8,7 @@ import java.awt.geom.Path2D;
 
 import org.atoiks.games.framework2d.*;
 
-/* package */ class SwingGraphics implements IGraphics<Graphics2D> {
+/* package */ class JavaGraphics implements IGraphics<Graphics2D> {
 
     /* package */ Graphics2D g;
     /* package */ int width, height;

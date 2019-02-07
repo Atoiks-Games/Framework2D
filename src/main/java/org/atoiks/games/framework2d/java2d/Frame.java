@@ -1,4 +1,4 @@
-package org.atoiks.games.framework2d.swing;
+package org.atoiks.games.framework2d.java2d;
 
 import java.awt.Graphics;
 import java.awt.Dimension;
@@ -37,7 +37,7 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
         }
     };
 
-    private final SwingGraphics graphics = new SwingGraphics();
+    private final JavaGraphics graphics = new JavaGraphics();
 
     private final JFrame frame;
 

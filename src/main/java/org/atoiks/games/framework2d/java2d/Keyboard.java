@@ -1,4 +1,4 @@
-package org.atoiks.games.framework2d.swing;
+package org.atoiks.games.framework2d.java2d;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
