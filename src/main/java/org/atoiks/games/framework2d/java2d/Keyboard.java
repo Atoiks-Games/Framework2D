@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.atoiks.games.framework2d.IKeyboard;
 
-/* package */ class Keyboard extends KeyAdapter implements IKeyboard {
+/* package */ final class Keyboard extends KeyAdapter implements IKeyboard {
 
     private final boolean[] keybuf = new boolean[256];
     private final StringBuilder sb = new StringBuilder();
