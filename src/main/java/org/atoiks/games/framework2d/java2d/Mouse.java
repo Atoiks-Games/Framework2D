@@ -8,7 +8,7 @@ import java.awt.event.MouseWheelEvent;
 
 import org.atoiks.games.framework2d.IMouse;
 
-/* package */ class Mouse extends MouseAdapter implements IMouse {
+/* package */ final class Mouse extends MouseAdapter implements IMouse {
 
     private enum MouseState {
         RELEASED, HELD, PRESSED;
@@ -17,13 +17,19 @@ import org.atoiks.games.framework2d.IMouse;
     private final boolean[] state;
     private final MouseState[] poll;
 
+    private final int shiftX;
+    private final int shiftY;
+
     private int localX, localY;
     private int globalX, globalY;
     private int wheelRot;
     private boolean inFrame;
     private boolean moved;
 
-    public Mouse() {
+    public Mouse(int shiftX, int shiftY) {
+        this.shiftX = shiftX;
+        this.shiftY = shiftY;
+
         final int btns = MouseInfo.getNumberOfButtons();
         state = new boolean[btns];
         poll = new MouseState[btns];
@@ -57,12 +63,12 @@ import org.atoiks.games.framework2d.IMouse;
 
     @Override
     public int getLocalX() {
-        return localX;
+        return localX + shiftX;
     }
 
     @Override
     public int getLocalY() {
-        return localY;
+        return localY + shiftY;
     }
 
     @Override

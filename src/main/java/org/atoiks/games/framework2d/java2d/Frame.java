@@ -54,17 +54,7 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
         // Create input devices and give them to input manager
         final Keyboard compKeyboard = new Keyboard();
-        final Mouse compMouse = new Mouse() {
-            @Override
-            public final int getLocalX() {
-                return super.getLocalX() - Frame.this.insets.left;
-            }
-
-            @Override
-            public final int getLocalY() {
-                return super.getLocalY() - Frame.this.insets.top;
-            }
-        };
+        final Mouse compMouse = new Mouse(-insets.left, -insets.top);
 
         Input.provideKeyboard(compKeyboard);
         Input.provideMouse(compMouse);
