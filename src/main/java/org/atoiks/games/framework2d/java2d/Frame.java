@@ -1,7 +1,5 @@
 package org.atoiks.games.framework2d.java2d;
 
-import java.awt.Graphics;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
@@ -10,109 +8,134 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.Insets;
+import java.awt.image.BufferStrategy;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
 
-public class Frame extends AbstractFrame<JFrame, Graphics2D> {
-
-    private final JPanel canvas = new JPanel() {
-
-        private static final long serialVersionUID = 91727385L;
-
-        @Override
-        protected void paintComponent(final Graphics g) {
-            super.paintComponent(g);
-
-            final Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-            graphics.g = g2d;
-            graphics.width = this.getWidth();
-            graphics.height = this.getHeight();
-            sceneMgr.renderCurrentScene(graphics);
-        }
-    };
+public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     private final JavaGraphics graphics = new JavaGraphics();
 
-    private final JFrame frame;
+    private final java.awt.Frame frame;
+    private final Insets insets;
+
+    private BufferStrategy strategy;
 
     private boolean shouldCallResize = true;
     private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
 
     public Frame(FrameInfo info) {
         super(info.getFps(), new SceneManager<>(info));
-        frame = new JFrame(info.getTitle());
+        frame = new java.awt.Frame(info.getTitle());
 
-        frame.setContentPane(canvas);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.setResizable(info.isResizable());
 
-        canvas.setPreferredSize(new Dimension(info.getWidth(), info.getHeight()));
-        canvas.setIgnoreRepaint(true);
+        // setSize only works when layout is null
+        // don't need a layout manager anyway
+        frame.setLayout(null);
 
-        frame.pack();
+        // temporarily setVisible since Insets only
+        // work when frame is visible
+
+        frame.setVisible(true);
+        insets = frame.getInsets();
+        setSize(info.getWidth(), info.getHeight());
+        frame.setVisible(false);
+
+        // Only repaint during rendering loop
+        frame.setIgnoreRepaint(true);
+
+        // Center the frame
         frame.setLocationRelativeTo(null);
 
         // Create input devices and give them to input manager
         final Keyboard compKeyboard = new Keyboard();
-        final Mouse compMouse = new Mouse();
+        final Mouse compMouse = new Mouse() {
+            @Override
+            public final int getLocalX() {
+                return super.getLocalX() - Frame.this.insets.left;
+            }
+
+            @Override
+            public final int getLocalY() {
+                return super.getLocalY() - Frame.this.insets.top;
+            }
+        };
 
         Input.provideKeyboard(compKeyboard);
         Input.provideMouse(compMouse);
 
         // Frame Listeners
+        frame.addKeyListener(compKeyboard);
+        frame.addMouseListener(compMouse);
+        frame.addMouseMotionListener(compMouse);
+        frame.addMouseWheelListener(compMouse);
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent evt) {
+                shouldCallResize = true;
+            }
+        });
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 Frame.this.running = false;
             }
         });
-        frame.addKeyListener(compKeyboard);
 
         // Allow canvas to receive special keys (tab and shift and stuff)
         frame.setFocusTraversalKeysEnabled(false);
-
-        // Canvas Listeners
-        canvas.addMouseListener(compMouse);
-        canvas.addMouseMotionListener(compMouse);
-        canvas.addMouseWheelListener(compMouse);
-        canvas.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent evt) {
-                shouldCallResize = true;
-            }
-        });
     }
 
     @Override
     protected int getWidth() {
-        return canvas.getBounds().width;
+        return frame.getWidth() - insets.left - insets.right;
     }
 
     @Override
     protected int getHeight() {
-        return canvas.getBounds().height;
+        return frame.getHeight() - insets.top - insets.bottom;
     }
 
     @Override
     protected void renderGame() {
-        try {
-            canvas.paintImmediately(canvas.getBounds());
-        } catch (ClassCastException | NullPointerException ex) {
-            // Swallow this exception:
-            // sun.java2d.NullSurfaceData cannot be cast to sun.java2d.opengl.OGLSurfaceData
-            //
-            // Similar to the bug link (except for it throws at a different path)
-            // https://bugs.java.com/view_bug.do?bug_id=JDK-8158495
-            //
-            // NullPointerException, occurs at drawGlyphList in java2d sth..
-            // assuming it happens when font is not ready yet
-        }
+        do {
+            // The following loop ensures that the contents of the drawing buffer
+            // are consistent in case the underlying surface was recreated
+            do {
+                // Get a new graphics context every time through the loop
+                // to make sure the strategy is validated
+                final Graphics2D g2d = (Graphics2D) strategy.getDrawGraphics();
+
+                // Setup graphics object
+                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+                graphics.g = g2d;
+                graphics.width = this.getWidth();
+                graphics.height = this.getHeight();
+
+                // Calculate offset
+                final Insets inset = frame.getInsets();
+                g2d.translate(inset.left, inset.top);
+
+                // Render the graphics
+                sceneMgr.renderCurrentScene(graphics);
+
+                // Dispose the graphics
+                g2d.dispose();
+
+                // Repeat the rendering if the drawing buffer contents
+                // were restored
+            } while (strategy.contentsRestored());
+
+            // Display the buffer
+            strategy.show();
+
+            // Repeat the rendering if the drawing buffer was lost
+        } while (strategy.contentsLost());
     }
 
     @Override
@@ -127,8 +150,7 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
 
     @Override
     public void setSize(int width, int height) {
-        canvas.setPreferredSize(new Dimension(width, height));
-        frame.pack();
+        frame.setSize(width + insets.left + insets.right, height + insets.top + insets.bottom);
     }
 
     @Override
@@ -137,7 +159,7 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
     }
 
     @Override
-    public JFrame getRawFrame() {
+    public java.awt.Frame getRawFrame() {
         return frame;
     }
 
@@ -145,6 +167,10 @@ public class Frame extends AbstractFrame<JFrame, Graphics2D> {
     public void init() {
         super.init();
         frame.setVisible(true);
+
+        // Use double buffering
+        frame.createBufferStrategy(2);
+        strategy = frame.getBufferStrategy();
     }
 
     @Override
