@@ -10,8 +10,13 @@ import org.atoiks.games.framework2d.*;
 
 /* package */ final class JavaGraphics implements IGraphics<Graphics2D> {
 
+    /* package */ final IFrame parent;
+
     /* package */ Graphics2D g;
-    /* package */ int width, height;
+
+    public JavaGraphics(final IFrame parent) {
+        this.parent = parent;
+    }
 
     @Override
     public Graphics2D getRawGraphics() {
@@ -60,7 +65,7 @@ import org.atoiks.games.framework2d.*;
 
     @Override
     public void clearGraphics() {
-        g.clearRect(0, 0, width, height);
+        g.clearRect(0, 0, parent.getWidth(), parent.getHeight());
     }
 
     @Override

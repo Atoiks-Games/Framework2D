@@ -18,7 +18,7 @@ import org.atoiks.games.framework2d.AbstractFrame;
 
 public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
-    private final JavaGraphics graphics = new JavaGraphics();
+    private final JavaGraphics graphics;
 
     private final java.awt.Frame frame;
     private final Insets insets;
@@ -81,6 +81,9 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
         // Allow canvas to receive special keys (tab and shift and stuff)
         frame.setFocusTraversalKeysEnabled(false);
+
+        // Create graphics instance
+        graphics = new JavaGraphics(this);
     }
 
     @Override
@@ -106,8 +109,6 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
                 // Setup graphics object
                 g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
                 graphics.g = g2d;
-                graphics.width = this.getWidth();
-                graphics.height = this.getHeight();
 
                 // Calculate offset
                 final Insets inset = frame.getInsets();
