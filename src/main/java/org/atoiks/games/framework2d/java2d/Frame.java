@@ -22,8 +22,7 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     private final java.awt.Frame frame;
     private final Insets insets;
-
-    private BufferStrategy strategy;
+    private final BufferStrategy strategy;
 
     private boolean shouldCallResize = true;
     private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
@@ -38,13 +37,16 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
         // don't need a layout manager anyway
         frame.setLayout(null);
 
-        // temporarily setVisible since Insets only
-        // work when frame is visible
+        // pack so getInsets and createBufferStrategy works
+        frame.pack();
 
-        frame.setVisible(true);
+        // Resize taking insets into account
         insets = frame.getInsets();
-        setSize(info.getWidth(), info.getHeight());
-        frame.setVisible(false);
+        frame.setSize(info.getWidth() + insets.left + insets.right, info.getHeight() + insets.top + insets.bottom);
+
+        // Use double buffering
+        frame.createBufferStrategy(2);
+        strategy = frame.getBufferStrategy();
 
         // Only repaint during rendering loop
         frame.setIgnoreRepaint(true);
@@ -157,10 +159,6 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
     public void init() {
         super.init();
         frame.setVisible(true);
-
-        // Use double buffering
-        frame.createBufferStrategy(2);
-        strategy = frame.getBufferStrategy();
     }
 
     @Override
