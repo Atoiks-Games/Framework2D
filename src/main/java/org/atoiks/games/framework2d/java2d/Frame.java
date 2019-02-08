@@ -84,12 +84,12 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
     }
 
     @Override
-    protected int getWidth() {
+    public int getWidth() {
         return frame.getWidth() - insets.left - insets.right;
     }
 
     @Override
-    protected int getHeight() {
+    public int getHeight() {
         return frame.getHeight() - insets.top - insets.bottom;
     }
 

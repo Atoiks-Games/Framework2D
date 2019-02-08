@@ -85,10 +85,6 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
         return sceneMgr;
     }
 
-    protected abstract int getWidth();
-
-    protected abstract int getHeight();
-
     protected abstract void resizeGame();
 
     protected abstract void renderGame();
