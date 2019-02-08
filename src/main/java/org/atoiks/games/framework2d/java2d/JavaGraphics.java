@@ -70,7 +70,7 @@ import org.atoiks.games.framework2d.*;
 
     @Override
     public void clearRegion(int x1, int y1, int x2, int y2) {
-        g.clearRect(x1, y1, x2, y2);
+        g.clearRect(x1, y1, x2 - x1, y2 - y1);
     }
 
     @Override
