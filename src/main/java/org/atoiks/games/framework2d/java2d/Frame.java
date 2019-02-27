@@ -22,7 +22,6 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     private final java.awt.Frame frame;
     private final Insets insets;
-    private final BufferStrategy strategy;
 
     private boolean shouldCallResize = true;
     private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
@@ -43,10 +42,6 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
         // Resize taking insets into account
         insets = frame.getInsets();
         frame.setSize(info.getWidth() + insets.left + insets.right, info.getHeight() + insets.top + insets.bottom);
-
-        // Use double buffering
-        frame.createBufferStrategy(2);
-        strategy = frame.getBufferStrategy();
 
         // Only repaint during rendering loop
         frame.setIgnoreRepaint(true);
@@ -98,6 +93,7 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     @Override
     protected void renderGame() {
+        final BufferStrategy strategy = frame.getBufferStrategy();
         do {
             // The following loop ensures that the contents of the drawing buffer
             // are consistent in case the underlying surface was recreated
@@ -160,6 +156,9 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
     public void init() {
         super.init();
         frame.setVisible(true);
+        
+        // Use double buffering
+        frame.createBufferStrategy(2);
     }
 
     @Override
