@@ -14,8 +14,11 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
         this.sceneMgr = mgr;
         this.secPerUpdate = 1.0f / fps;
         this.msPerUpdate = 1000.0f / fps;
+
+        this.sceneMgr.frame = this;
     }
 
+    @Override
     public void init() {
         if (ON_MAC) {
             try {
@@ -28,6 +31,7 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
         this.sceneMgr.callLoaderInit();
     }
 
+    @Override
     public void loop() {
         double previous = System.currentTimeMillis();
         double steps = 0.0f;
@@ -62,6 +66,7 @@ public abstract class AbstractFrame<T, G> implements IFrame<T> {
         }
     }
 
+    @Override
     public void close() {
         // Ensures leave for Scene gets called
         sceneMgr.switchToScene(-1);

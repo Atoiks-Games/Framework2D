@@ -15,6 +15,8 @@ public final class SceneManager<G> {
     private int sceneId;
     private boolean skipCycle;
 
+    /* package */ IFrame frame;
+
     public SceneManager(FrameInfo info) {
         this.loader = info.getLoader();
         this.scenes = info.getGameScenes();
@@ -102,6 +104,10 @@ public final class SceneManager<G> {
         }
         // Even though there is no frame, the app is still running
         return true;
+    }
+
+    public IFrame frame() {
+        return frame;
     }
 
     public Map<String, ? extends Object> resources() {
