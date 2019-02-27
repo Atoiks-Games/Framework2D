@@ -1,14 +1,16 @@
 package org.atoiks.games.framework2d.java2d;
 
+import java.awt.Insets;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
 import java.awt.RenderingHints;
+import java.awt.GraphicsEnvironment;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentAdapter;
 
-import java.awt.Insets;
 import java.awt.image.BufferStrategy;
 
 import org.atoiks.games.framework2d.Input;
@@ -21,7 +23,9 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
     private final JavaGraphics graphics;
 
     private final java.awt.Frame frame;
-    private final Insets insets;
+    private final Mouse compMouse;
+
+    private Insets insets;
 
     private boolean shouldCallResize = true;
     private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
@@ -51,7 +55,8 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
         // Create input devices and give them to input manager
         final Keyboard compKeyboard = new Keyboard();
-        final Mouse compMouse = new Mouse(-insets.left, -insets.top);
+        compMouse = new Mouse();
+        compMouse.setMouseShift(-insets.left, -insets.top);
 
         Input.provideKeyboard(compKeyboard);
         Input.provideMouse(compMouse);
@@ -129,6 +134,9 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     @Override
     protected void resizeGame() {
+        insets = frame.getInsets();
+        compMouse.setMouseShift(-insets.left, -insets.top);
+
         final int currentSceneId = sceneMgr.getCurrentSceneId();
         if (shouldCallResize || lastSceneId != currentSceneId) {
             shouldCallResize = false;
@@ -153,16 +161,31 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
     }
 
     @Override
+    public void setFullScreen(final boolean status) {
+        final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        if (status) {
+            if (gd.isFullScreenSupported()) {
+                gd.setFullScreenWindow(frame);
+            }
+        } else {
+            gd.setFullScreenWindow(null);
+        }
+    }
+
+    @Override
     public void init() {
         super.init();
         frame.setVisible(true);
-        
+
         // Use double buffering
         frame.createBufferStrategy(2);
     }
 
     @Override
     public void close() {
+        // Just in case
+        setFullScreen(false);
+
         super.close();
         frame.dispose();
     }

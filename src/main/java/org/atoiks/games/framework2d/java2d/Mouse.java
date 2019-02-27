@@ -17,8 +17,8 @@ import org.atoiks.games.framework2d.IMouse;
     private final boolean[] state;
     private final MouseState[] poll;
 
-    private final int shiftX;
-    private final int shiftY;
+    private int shiftX;
+    private int shiftY;
 
     private int localX, localY;
     private int globalX, globalY;
@@ -26,14 +26,16 @@ import org.atoiks.games.framework2d.IMouse;
     private boolean inFrame;
     private boolean moved;
 
-    public Mouse(int shiftX, int shiftY) {
-        this.shiftX = shiftX;
-        this.shiftY = shiftY;
-
+    public Mouse() {
         final int btns = MouseInfo.getNumberOfButtons();
         state = new boolean[btns];
         poll = new MouseState[btns];
         Arrays.fill(poll, MouseState.RELEASED);
+    }
+
+    public void setMouseShift(int shiftX, int shiftY) {
+        this.shiftX = shiftX;
+        this.shiftY = shiftY;
     }
 
     @Override
