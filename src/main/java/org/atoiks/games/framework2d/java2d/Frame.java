@@ -166,8 +166,8 @@ public class Frame extends AbstractFrame {
     }
 
     @Override
-    public boolean getVisible() {
-        return frame.getVisible();
+    public boolean isVisible() {
+        return frame.isVisible();
     }
 
     @Override
