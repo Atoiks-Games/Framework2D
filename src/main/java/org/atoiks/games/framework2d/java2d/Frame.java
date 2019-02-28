@@ -30,6 +30,10 @@ public class Frame extends AbstractFrame {
     private boolean shouldCallResize = true;
     private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
 
+    // screen dimension before entering fullscreen mode
+    private int preFullScreenW;
+    private int preFullScreenH;
+
     public Frame(FrameInfo info) {
         super(info.getFps(), new SceneManager(info));
         frame = new java.awt.Frame(info.getTitle());
@@ -185,16 +189,30 @@ public class Frame extends AbstractFrame {
 
         final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         if (status) {
+            // Save the screen size
+            preFullScreenW = getWidth();
+            preFullScreenH = getHeight();
+
             if (gd.isFullScreenSupported()) {
                 // setFullScreenWindow seems to use its own buffer strategy?
                 gd.setFullScreenWindow(frame);
             } else {
+                // Max out the window as if it fills the whole screen
                 frame.createBufferStrategy(2);
                 frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
             }
         } else {
             frame.createBufferStrategy(2);
-            exitExclusiveFullScreen();
+            if (gd.isFullScreenSupported()) {
+                exitExclusiveFullScreen();
+            } else {
+                // reset the extended state
+                frame.setExtendedState(java.awt.Frame.NORMAL);
+                // restore size
+                setSize(preFullScreenW, preFullScreenH);
+                // center the frame
+                frame.setLocationRelativeTo(null);
+            }
         }
     }
 
