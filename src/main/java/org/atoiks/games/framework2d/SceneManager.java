@@ -3,7 +3,7 @@ package org.atoiks.games.framework2d;
 import java.util.Map;
 import java.util.HashMap;
 
-public final class SceneManager<G> {
+public final class SceneManager {
 
     public static final int LOADER_SCENE_ID = -1;
     public static final int UNKNOWN_SCENE_ID = -2;
@@ -72,7 +72,7 @@ public final class SceneManager<G> {
         return false;
     }
 
-    public void renderCurrentScene(final IGraphics<? extends G> g) {
+    public void renderCurrentScene(final IGraphics g) {
         if (sceneId == LOADER_SCENE_ID) {
             loader.render(g);
             return;

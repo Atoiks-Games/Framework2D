@@ -4,9 +4,9 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Image;
 
-public interface IGraphics<T> {
+public interface IGraphics {
 
-    public T getRawGraphics();
+    public Object getRawGraphics();
 
     public void setFont(Font f);
     public Font getFont();
