@@ -8,15 +8,15 @@ public interface IFrame extends AutoCloseable {
 
     public Object getRawFrame();
 
-    public void setSize(int width, int height);
-    public void setTitle(String title);
     public void setFullScreen(boolean status);
+    public void setSize(int width, int height);
+    public int getWidth();
+    public int getHeight();
 
     public void setVisible(boolean status);
     public boolean getVisible();
 
-    public int getWidth();
-    public int getHeight();
+    public void setTitle(String title);
 
     public SceneManager getSceneManager();
 }
