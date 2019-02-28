@@ -18,7 +18,7 @@ import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
 
-public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
+public class Frame extends AbstractFrame {
 
     private final JavaGraphics graphics;
 
@@ -31,7 +31,7 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
     private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
 
     public Frame(FrameInfo info) {
-        super(info.getFps(), new SceneManager<>(info));
+        super(info.getFps(), new SceneManager(info));
         frame = new java.awt.Frame(info.getTitle());
 
         frame.setResizable(info.isResizable());

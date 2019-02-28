@@ -11,7 +11,7 @@ public abstract class Scene {
     /**
      * Renders on the screen
      */
-    public abstract <T> void render(IGraphics<T> g);
+    public abstract void render(IGraphics g);
 
     /**
      * Updates the entities in the scene

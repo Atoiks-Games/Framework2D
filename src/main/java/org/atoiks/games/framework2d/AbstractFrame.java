@@ -1,16 +1,16 @@
 package org.atoiks.games.framework2d;
 
-public abstract class AbstractFrame<T, G> implements IFrame<T> {
+public abstract class AbstractFrame implements IFrame {
 
     private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
     protected boolean running = true;
 
-    protected SceneManager<G> sceneMgr;
+    protected SceneManager sceneMgr;
     private final float secPerUpdate;
     private final float msPerUpdate;
 
-    protected AbstractFrame(final float fps, SceneManager<G> mgr) {
+    protected AbstractFrame(final float fps, SceneManager mgr) {
         this.sceneMgr = mgr;
         this.secPerUpdate = 1.0f / fps;
         this.msPerUpdate = 1000.0f / fps;

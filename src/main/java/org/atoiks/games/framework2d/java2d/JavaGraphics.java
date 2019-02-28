@@ -8,7 +8,7 @@ import java.awt.geom.Path2D;
 
 import org.atoiks.games.framework2d.*;
 
-/* package */ final class JavaGraphics implements IGraphics<Graphics2D> {
+/* package */ final class JavaGraphics implements IGraphics {
 
     /* package */ final IFrame parent;
 
