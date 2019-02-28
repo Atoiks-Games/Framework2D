@@ -162,12 +162,35 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     @Override
     public void setFullScreen(final boolean status) {
+        if (frame.isUndecorated() == status) {
+            // We are already in the fullscreen state
+            // ignore and do nothing
+            return;
+        }
+
+        // temporarily dispose for setUndecorated to work!
+        frame.dispose();
+        frame.setUndecorated(status);
+        frame.setVisible(true);
+
         final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         if (status) {
             if (gd.isFullScreenSupported()) {
+                // setFullScreenWindow seems to use its own buffer strategy?
                 gd.setFullScreenWindow(frame);
+            } else {
+                frame.createBufferStrategy(2);
+                frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
             }
         } else {
+            frame.createBufferStrategy(2);
+            exitExclusiveFullScreen();
+        }
+    }
+
+    private void exitExclusiveFullScreen() {
+        final GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        if (gd.getFullScreenWindow() == frame) {
             gd.setFullScreenWindow(null);
         }
     }
@@ -183,8 +206,8 @@ public class Frame extends AbstractFrame<java.awt.Frame, Graphics2D> {
 
     @Override
     public void close() {
-        // Just in case
-        setFullScreen(false);
+        // Exit exclusive fullscreen mode if we are in it
+        exitExclusiveFullScreen();
 
         super.close();
         frame.dispose();
