@@ -110,7 +110,7 @@ public final class SceneManager {
         return frame;
     }
 
-    public Map<String, ? extends Object> resources() {
+    public Map<String, Object> resources() {
         return res;
     }
 
