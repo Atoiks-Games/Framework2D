@@ -161,6 +161,16 @@ public class Frame extends AbstractFrame {
     }
 
     @Override
+    public void setVisible(final boolean status) {
+        frame.setVisible(status);
+    }
+
+    @Override
+    public boolean getVisible() {
+        return frame.getVisible();
+    }
+
+    @Override
     public void setFullScreen(final boolean status) {
         if (frame.isUndecorated() == status) {
             // We are already in the fullscreen state
