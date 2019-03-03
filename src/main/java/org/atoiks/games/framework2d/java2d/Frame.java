@@ -201,6 +201,10 @@ public class Frame extends AbstractFrame {
                 frame.createBufferStrategy(2);
                 frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
             }
+
+            // Get the frame focused
+            frame.toFront();
+            frame.requestFocus();
         } else {
             frame.createBufferStrategy(2);
             if (gd.isFullScreenSupported()) {
