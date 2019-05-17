@@ -5,62 +5,77 @@ import java.util.HashMap;
 
 public final class SceneManager {
 
-    public static final int LOADER_SCENE_ID = -1;
-    public static final int UNKNOWN_SCENE_ID = -2;
+    public static final String LOADER_SCENE_ID = null;
 
     private final Map<String, Object> res = new HashMap<>();
+    private final Map<String, GameSceneHolder> scenes = new HashMap<>();
 
     private Scene loader;
-    private GameScene[] scenes;
-    private int sceneId;
     private boolean skipCycle;
+
+    private String currentId;
+    private GameSceneHolder currentGameScene;
 
     /* package */ IFrame frame;
 
     public SceneManager(FrameInfo info) {
-        this.loader = info.getLoader();
-        this.scenes = info.getGameScenes();
-        this.sceneId = LOADER_SCENE_ID;
+        this.currentId = LOADER_SCENE_ID;
         this.skipCycle = false;
         this.res.putAll(info.res);
 
+        this.loader = info.getLoader();
         if (loader != null) loader.attachSceneManager(this);
-        for (final Scene s : scenes) {
-            s.attachSceneManager(this);
+
+        for (final GameScene gs : info.getGameScenes()) {
+            loadGameScene(gs, false);
         }
     }
 
-    public boolean switchToScene(final int id) {
-        if (sceneId == LOADER_SCENE_ID) {
-            // leave the loader and trigger init of game scenes
-            this.loader.leave();
-            for (final GameScene s : scenes) {
-                s.init();
+    public void loadGameScene(GameScene gs, boolean replaceOld) {
+        final GameSceneHolder old = scenes.get(gs.id);
+        if (old != null) {
+            if (!replaceOld) {
+                throw new RuntimeException("Duplicate scene ID of " + gs.id);
             }
-        } else if (sceneId >= 0 && sceneId < scenes.length) {
-            scenes[sceneId].leave();
+
+            // the old game scene will be replaced, have to leave and deinit!
+            old.callLeave();
+            old.tryDeinit();
         }
 
-        if (id >= 0 && id < scenes.length) {
-            scenes[id].enter(sceneId);
-            sceneId = id;
-            skipCycle = true;
-            return true;
+        scenes.put(gs.id, new GameSceneHolder(gs));
+        gs.attachSceneManager(this);
+    }
+
+    public boolean switchToScene(final String id) {
+        if (currentId == LOADER_SCENE_ID) {
+            loader.leave();
+        } else {
+            currentGameScene.callLeave();
+        }
+
+        if ((currentGameScene = scenes.get(id)) != null) {
+            currentGameScene.callEnter(currentId);
+            currentId = id;
+            return (skipCycle = true);
         }
 
         return false;
     }
 
-    public boolean gotoNextScene() {
-        return switchToScene(sceneId + 1);
-    }
-
     public boolean restartCurrentScene() {
-        return switchToScene(sceneId);
+        return switchToScene(currentId);
     }
 
-    public int getCurrentSceneId() {
-        return sceneId;
+    public String getCurrentSceneId() {
+        return currentId;
+    }
+
+    public Scene getCurrentScene() {
+        if (currentGameScene == null) {
+            return currentId == null ? loader : null;
+        }
+        return currentGameScene.gs;
     }
 
     public boolean shouldSkipCycle() {
@@ -73,35 +88,36 @@ public final class SceneManager {
     }
 
     public void renderCurrentScene(final IGraphics g) {
-        if (sceneId == LOADER_SCENE_ID) {
+        if (currentId == LOADER_SCENE_ID) {
             loader.render(g);
             return;
         }
 
-        if (sceneId >= 0 && sceneId < scenes.length) {
-            this.scenes[sceneId].render(g);
+        if (currentGameScene != null) {
+            currentGameScene.callRender(g);
         }
     }
 
     public void resizeCurrentScene(final int x, final int y) {
-        if (sceneId == LOADER_SCENE_ID) {
+        if (currentId == LOADER_SCENE_ID) {
             loader.resize(x, y);
             return;
         }
 
-        if (sceneId >= 0 && sceneId < scenes.length) {
-            this.scenes[sceneId].resize(x, y);
+        if (currentGameScene != null) {
+            currentGameScene.callResize(x, y);
         }
     }
 
     public boolean updateCurrentScene(final float dt) {
-        if (sceneId == LOADER_SCENE_ID) {
+        if (currentId == LOADER_SCENE_ID) {
             return loader.update(dt);
         }
 
-        if (sceneId >= 0 && sceneId < scenes.length) {
-            return this.scenes[sceneId].update(dt);
+        if (currentGameScene != null) {
+            return currentGameScene.callUpdate(dt);
         }
+
         // Even though there is no frame, the app is still running
         return true;
     }
@@ -115,9 +131,8 @@ public final class SceneManager {
     }
 
     /* package */ void callGameSceneDeinit() {
-        for (final GameScene s : scenes) {
-            s.deinit();
-        }
+        scenes.forEach((k, v) -> v.tryDeinit());
+        scenes.clear();
     }
 
     /* package */ void callLoaderInit() {
