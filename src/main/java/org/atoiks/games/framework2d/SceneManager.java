@@ -31,20 +31,43 @@ public final class SceneManager {
         }
     }
 
+    /**
+     * Loads in a game scene. If the scene being loaded has the same ID as the
+     * current scene, then the current one will be exited then unloaded first.
+     * Afterwards, the scene being loaded will be initialized and entered.
+     *
+     * @param gs - The new game scene being loaded
+     * @param replaceOld - Will replace previously loaded scene with same ID
+     *                     if true
+     */
     public void loadGameScene(GameScene gs, boolean replaceOld) {
+        gs.attachSceneManager(this);
+
         final GameSceneHolder old = scenes.get(gs.id);
         if (old != null) {
             if (!replaceOld) {
                 throw new RuntimeException("Duplicate scene ID of " + gs.id);
             }
 
-            // the old game scene will be replaced, have to leave and deinit!
-            old.callLeave();
-            old.tryDeinit();
-        }
+            final boolean replCurrent = old == currentGameScene;
 
-        scenes.put(gs.id, new GameSceneHolder(gs));
-        gs.attachSceneManager(this);
+            // the old game scene will be replaced,
+            // call leave if needed then call deinit
+            if (replCurrent) {
+                old.callLeave();
+            }
+            old.tryDeinit();
+
+            // swap the old game scene with the new one
+            old.gs = gs;
+
+            if (replCurrent) {
+                // then call enter
+                old.callEnter(gs.id);
+            }
+        } else {
+            scenes.put(gs.id, new GameSceneHolder(gs));
+        }
     }
 
     public boolean switchToScene(final String id) {

@@ -1,8 +1,8 @@
 package org.atoiks.games.framework2d;
 
-public final class GameSceneHolder {
+final class GameSceneHolder {
 
-    public final GameScene gs;
+    public GameScene gs;
 
     private boolean initFlag;
 
