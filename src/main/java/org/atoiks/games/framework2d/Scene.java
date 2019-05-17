@@ -2,7 +2,7 @@ package org.atoiks.games.framework2d;
 
 public abstract class Scene {
 
-    protected SceneManager scene;
+    protected transient SceneManager scene;
 
     final void attachSceneManager(SceneManager mgr) {
         this.scene = mgr;
