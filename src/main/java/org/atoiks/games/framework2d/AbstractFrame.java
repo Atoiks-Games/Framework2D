@@ -69,7 +69,7 @@ public abstract class AbstractFrame implements IFrame {
     @Override
     public void close() {
         // Ensures leave for Scene gets called
-        sceneMgr.switchToScene(-1);
+        sceneMgr.switchToScene(null);
         // Deinitalize all game scenes
         sceneMgr.callGameSceneDeinit();
         // Deinitialize loader

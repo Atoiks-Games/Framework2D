@@ -14,6 +14,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.image.BufferStrategy;
 
 import org.atoiks.games.framework2d.Input;
+import org.atoiks.games.framework2d.Scene;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
@@ -28,7 +29,7 @@ public class Frame extends AbstractFrame {
     private Insets insets;
 
     private boolean shouldCallResize = true;
-    private int lastSceneId = SceneManager.UNKNOWN_SCENE_ID;
+    private Scene lastScene = null;
 
     // screen dimension before entering fullscreen mode
     private int preFullScreenW;
@@ -141,10 +142,10 @@ public class Frame extends AbstractFrame {
         insets = frame.getInsets();
         compMouse.setMouseShift(-insets.left, -insets.top);
 
-        final int currentSceneId = sceneMgr.getCurrentSceneId();
-        if (shouldCallResize || lastSceneId != currentSceneId) {
+        final Scene currentScene = sceneMgr.getCurrentScene();
+        if (shouldCallResize || lastScene != currentScene) {
             shouldCallResize = false;
-            lastSceneId = currentSceneId;
+            lastScene = currentScene;
             sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
         }
     }
