@@ -66,6 +66,23 @@ public final class SceneManager {
         }
     }
 
+    /**
+     * Deinitializes and removes the scene from the list of scenes
+     *
+     * will crash if you try to unload current scene
+     *
+     * @param id - the scene being unloaded
+     */
+    public void unloadScene(final String id) {
+        final SceneHolder holder = scenes.get(id);
+        if (holder == currentScene) {
+            throw new IllegalStateException("Cannot unload currently active scene");
+        }
+
+        holder.tryDeinit();
+        scenes.remove(id);
+    }
+
     public boolean switchToScene(final String id) {
         if (currentScene != null) {
             currentScene.callLeave();
