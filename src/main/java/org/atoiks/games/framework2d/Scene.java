@@ -30,6 +30,11 @@ public abstract class Scene {
     public abstract void resize(int x, int y);
 
     /**
+     * Should stay constant during an object's lifetime!
+     */
+    public abstract String getId();
+
+    /**
      * The initializer of the scene. Guarantee called before the scene is
      * entered
      */
@@ -42,6 +47,15 @@ public abstract class Scene {
      * shutting down
      */
     public void deinit() {
+        // Does nothing
+    }
+
+    /**
+     * Called during a scene transition, after leaving the previous scene
+     *
+     * @param from - the scene id of thr previous scene
+     */
+    public void enter(String from) {
         // Does nothing
     }
 

@@ -1,13 +1,13 @@
 package org.atoiks.games.framework2d;
 
-final class GameSceneHolder {
+final class SceneHolder {
 
-    public GameScene gs;
+    public Scene scene;
 
     private boolean initFlag;
 
-    public GameSceneHolder(GameScene gs) {
-        this.gs = gs;
+    public SceneHolder(Scene scene) {
+        this.scene = scene;
     }
 
     public boolean tryInit() {
@@ -15,7 +15,7 @@ final class GameSceneHolder {
             return false;
         }
 
-        gs.init();
+        scene.init();
         return (initFlag = true);
     }
 
@@ -24,35 +24,35 @@ final class GameSceneHolder {
             return false;
         }
 
-        gs.deinit();
+        scene.deinit();
         return (initFlag = false);
     }
 
     public void callEnter(String prevId) {
         tryInit();
-        gs.enter(prevId);
+        scene.enter(prevId);
     }
 
     public void callLeave() {
         // Only leave if scene is initialized
         // (if it is uninitialized, it wouldnt have even entered)
         if (initFlag) {
-            gs.leave();
+            scene.leave();
         }
     }
 
     public void callRender(IGraphics g) {
         tryInit();
-        gs.render(g);
+        scene.render(g);
     }
 
     public boolean callUpdate(float dt) {
         tryInit();
-        return gs.update(dt);
+        return scene.update(dt);
     }
 
     public void callResize(int w, int h) {
         tryInit();
-        gs.resize(w, h);
+        scene.resize(w, h);
     }
 }

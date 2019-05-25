@@ -27,8 +27,6 @@ public abstract class AbstractFrame implements IFrame {
                 //
             }
         }
-
-        this.sceneMgr.callLoaderInit();
     }
 
     @Override
@@ -70,10 +68,8 @@ public abstract class AbstractFrame implements IFrame {
     public void close() {
         // Ensures leave for Scene gets called
         sceneMgr.switchToScene(null);
-        // Deinitalize all game scenes
-        sceneMgr.callGameSceneDeinit();
-        // Deinitialize loader
-        sceneMgr.callLoaderDeinit();
+        // Deinitalize all scenes
+        sceneMgr.callSceneDeinit();
 
         // Restore the mac stuff
         if (ON_MAC) {

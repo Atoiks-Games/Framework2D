@@ -11,8 +11,8 @@ public final class FrameInfo implements Serializable {
     // Package level access!
     String titleName = "";
     float fps = 30.0f;
-    Scene loader = null;
-    GameScene[] scenes = new GameScene[0];
+    Scene[] scenes = new Scene[0];
+    String firstScene;
     int width = 800;
     int height = 600;
     boolean resizable = false;
@@ -37,11 +37,11 @@ public final class FrameInfo implements Serializable {
         return fps;
     }
 
-    public Scene getLoader() {
-        return loader;
+    public String getFirstScene() {
+        return firstScene;
     }
 
-    public GameScene[] getGameScenes() {
+    public Scene[] getScenes() {
         return scenes;
     }
 
@@ -69,12 +69,12 @@ public final class FrameInfo implements Serializable {
         return this;
     }
 
-    public FrameInfo setLoader(Scene loader) {
-        this.loader = loader;
+    public FrameInfo setFirstScene(String firstScene) {
+        this.firstScene = firstScene;
         return this;
     }
 
-    public FrameInfo setGameScenes(GameScene... scenes) {
+    public FrameInfo setScenes(Scene... scenes) {
         this.scenes = scenes;
         return this;
     }

@@ -5,51 +5,47 @@ import java.util.HashMap;
 
 public final class SceneManager {
 
-    public static final String LOADER_SCENE_ID = null;
-
     private final Map<String, Object> res = new HashMap<>();
-    private final Map<String, GameSceneHolder> scenes = new HashMap<>();
+    private final Map<String, SceneHolder> scenes = new HashMap<>();
 
-    private Scene loader;
     private boolean skipCycle;
 
     private String currentId;
-    private GameSceneHolder currentGameScene;
+    private SceneHolder currentScene;
 
     /* package */ IFrame frame;
 
     public SceneManager(FrameInfo info) {
-        this.currentId = LOADER_SCENE_ID;
         this.skipCycle = false;
         this.res.putAll(info.res);
 
-        this.loader = info.getLoader();
-        if (loader != null) loader.attachSceneManager(this);
-
-        for (final GameScene gs : info.getGameScenes()) {
-            loadGameScene(gs, false);
+        for (final Scene scene : info.getScenes()) {
+            loadScene(scene, false);
         }
+
+        switchToScene(info.getFirstScene());
     }
 
     /**
-     * Loads in a game scene. If the scene being loaded has the same ID as the
-     * current scene, then the current one will be exited then unloaded first.
-     * Afterwards, the scene being loaded will be initialized and entered.
+     * If the scene being loaded has the same ID as the current scene, then
+     * the current one will be exited then unloaded first. Afterwards, the
+     * scene being loaded will be initialized and entered.
      *
-     * @param gs - The new game scene being loaded
+     * @param scene - The new scene being loaded
      * @param replaceOld - Will replace previously loaded scene with same ID
      *                     if true
      */
-    public void loadGameScene(GameScene gs, boolean replaceOld) {
-        gs.attachSceneManager(this);
+    public void loadScene(Scene scene, boolean replaceOld) {
+        scene.attachSceneManager(this);
 
-        final GameSceneHolder old = scenes.get(gs.id);
+        final String id = scene.getId();
+        final SceneHolder old = scenes.get(id);
         if (old != null) {
             if (!replaceOld) {
-                throw new RuntimeException("Duplicate scene ID of " + gs.id);
+                throw new RuntimeException("Duplicate scene ID of " + id);
             }
 
-            final boolean replCurrent = old == currentGameScene;
+            final boolean replCurrent = old == currentScene;
 
             // the old game scene will be replaced,
             // call leave if needed then call deinit
@@ -59,26 +55,24 @@ public final class SceneManager {
             old.tryDeinit();
 
             // swap the old game scene with the new one
-            old.gs = gs;
+            old.scene = scene;
 
             if (replCurrent) {
                 // then call enter
-                old.callEnter(gs.id);
+                old.callEnter(id);
             }
         } else {
-            scenes.put(gs.id, new GameSceneHolder(gs));
+            scenes.put(id, new SceneHolder(scene));
         }
     }
 
     public boolean switchToScene(final String id) {
-        if (currentId == LOADER_SCENE_ID) {
-            loader.leave();
-        } else {
-            currentGameScene.callLeave();
+        if (currentScene != null) {
+            currentScene.callLeave();
         }
 
-        if ((currentGameScene = scenes.get(id)) != null) {
-            currentGameScene.callEnter(currentId);
+        if ((currentScene = scenes.get(id)) != null) {
+            currentScene.callEnter(currentId);
             currentId = id;
             return (skipCycle = true);
         }
@@ -95,10 +89,7 @@ public final class SceneManager {
     }
 
     public Scene getCurrentScene() {
-        if (currentGameScene == null) {
-            return currentId == null ? loader : null;
-        }
-        return currentGameScene.gs;
+        return currentScene != null ? currentScene.scene : null;
     }
 
     public boolean shouldSkipCycle() {
@@ -111,34 +102,20 @@ public final class SceneManager {
     }
 
     public void renderCurrentScene(final IGraphics g) {
-        if (currentId == LOADER_SCENE_ID) {
-            loader.render(g);
-            return;
-        }
-
-        if (currentGameScene != null) {
-            currentGameScene.callRender(g);
+        if (currentScene != null) {
+            currentScene.callRender(g);
         }
     }
 
     public void resizeCurrentScene(final int x, final int y) {
-        if (currentId == LOADER_SCENE_ID) {
-            loader.resize(x, y);
-            return;
-        }
-
-        if (currentGameScene != null) {
-            currentGameScene.callResize(x, y);
+        if (currentScene != null) {
+            currentScene.callResize(x, y);
         }
     }
 
     public boolean updateCurrentScene(final float dt) {
-        if (currentId == LOADER_SCENE_ID) {
-            return loader.update(dt);
-        }
-
-        if (currentGameScene != null) {
-            return currentGameScene.callUpdate(dt);
+        if (currentScene != null) {
+            return currentScene.callUpdate(dt);
         }
 
         // Even though there is no frame, the app is still running
@@ -153,16 +130,8 @@ public final class SceneManager {
         return res;
     }
 
-    /* package */ void callGameSceneDeinit() {
+    /* package */ void callSceneDeinit() {
         scenes.forEach((k, v) -> v.tryDeinit());
         scenes.clear();
-    }
-
-    /* package */ void callLoaderInit() {
-        loader.init();
-    }
-
-    /* package */ void callLoaderDeinit() {
-        loader.deinit();
     }
 }
