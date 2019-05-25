@@ -16,13 +16,7 @@ public final class ResourceManager {
     private ResourceManager() {
     }
 
-    public static <T> T load(final String path, final IResourceDecoder<? extends T> decoder) throws DecodeException {
-        @SuppressWarnings("unchecked")
-        final T cached = (T) CACHE.get(path);
-        if (cached != null) {
-            return cached;
-        }
-
+    public static <T> T reload(final String path, final IResourceDecoder<? extends T> decoder) throws DecodeException {
         final InputStream is = ResourceManager.class.getResourceAsStream(path);
         if (is == null) {
             return null;
@@ -31,6 +25,15 @@ public final class ResourceManager {
         final T obj = decoder.decode(is);
         CACHE.put(path, obj);
         return obj;
+    }
+
+    public static <T> T load(final String path, final IResourceDecoder<? extends T> decoder) throws DecodeException {
+        final T existing = get(path);
+        if (existing != null) {
+            return existing;
+        }
+
+        return reload(path, decoder);
     }
 
     @SuppressWarnings("unchecked")
