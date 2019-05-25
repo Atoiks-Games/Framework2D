@@ -17,6 +17,7 @@ public final class AudioDecoder implements IResourceDecoder<Clip> {
     private AudioDecoder() {
     }
 
+    @Override
     public Clip decode(InputStream is) throws DecodeException {
         try (final AudioInputStream in = AudioSystem.getAudioInputStream(new BufferedInputStream(is))) {
             final Clip clip = AudioSystem.getClip(null);

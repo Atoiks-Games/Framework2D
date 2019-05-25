@@ -14,6 +14,7 @@ public final class ImageDecoder implements IResourceDecoder<BufferedImage> {
     private ImageDecoder() {
     }
 
+    @Override
     public BufferedImage decode(InputStream is) throws DecodeException {
         try {
             return ImageIO.read(is);

@@ -16,6 +16,7 @@ public final class ObjectDecoder<T> implements IResourceDecoder<T> {
     private ObjectDecoder() {
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public T decode(InputStream is) throws DecodeException {
         try {
