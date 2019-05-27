@@ -1,6 +1,7 @@
 package org.atoiks.games.framework2d;
 
 import java.io.InputStream;
+import java.io.IOException;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -8,6 +9,8 @@ import java.util.function.Function;
 
 import org.atoiks.games.framework2d.decoder.DecodeException;
 import org.atoiks.games.framework2d.decoder.IResourceDecoder;
+
+import org.atoiks.games.framework2d.resolver.InternalResourceResolver;
 
 public final class ResourceManager {
 
@@ -17,14 +20,14 @@ public final class ResourceManager {
     }
 
     public static <T> T reload(final String path, final IResourceDecoder<? extends T> decoder) throws DecodeException {
-        final InputStream is = ResourceManager.class.getResourceAsStream(path);
-        if (is == null) {
-            return null;
+        try {
+            final InputStream is = InternalResourceResolver.INSTANCE.openStream(path);
+            final T obj = decoder.decode(is);
+            CACHE.put(path, obj);
+            return obj;
+        } catch (IOException ex) {
+            throw new DecodeException(ex);
         }
-
-        final T obj = decoder.decode(is);
-        CACHE.put(path, obj);
-        return obj;
     }
 
     public static <T> T load(final String path, final IResourceDecoder<? extends T> decoder) throws DecodeException {
