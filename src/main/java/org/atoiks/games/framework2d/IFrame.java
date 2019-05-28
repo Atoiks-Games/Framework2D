@@ -17,6 +17,4 @@ public interface IFrame extends AutoCloseable {
     public boolean isVisible();
 
     public void setTitle(String title);
-
-    public SceneManager getSceneManager();
 }
