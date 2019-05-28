@@ -5,19 +5,25 @@ import java.util.HashMap;
 
 public final class SceneManager {
 
-    private final Map<String, Object> res = new HashMap<>();
-    private final Map<String, SceneHolder> scenes = new HashMap<>();
+    private static final Map<String, Object> res = new HashMap<>();
+    private static final Map<String, SceneHolder> scenes = new HashMap<>();
 
-    private boolean skipCycle;
+    private static boolean skipCycle;
 
-    private String currentId;
-    private SceneHolder currentScene;
+    private static String currentId;
+    private static SceneHolder currentScene;
 
-    /* package */ IFrame frame;
+    private static IFrame frame;
 
-    public SceneManager(FrameInfo info) {
-        this.skipCycle = false;
-        this.res.putAll(info.res);
+    private SceneManager() {
+    }
+
+    public static void setFrameContext(IFrame frame, FrameInfo info) {
+        callSceneDeinit();
+
+        SceneManager.frame = frame;
+        SceneManager.skipCycle = false;
+        SceneManager.res.putAll(info.res);
 
         for (final Scene scene : info.getScenes()) {
             loadScene(scene, false);
@@ -35,9 +41,7 @@ public final class SceneManager {
      * @param replaceOld - Will replace previously loaded scene with same ID
      *                     if true
      */
-    public void loadScene(Scene scene, boolean replaceOld) {
-        scene.attachSceneManager(this);
-
+    public static void loadScene(Scene scene, boolean replaceOld) {
         final String id = scene.getId();
         final SceneHolder old = scenes.get(id);
         if (old != null) {
@@ -73,7 +77,7 @@ public final class SceneManager {
      *
      * @param id - the scene being unloaded
      */
-    public void unloadScene(final String id) {
+    public static void unloadScene(final String id) {
         final SceneHolder holder = scenes.get(id);
         if (holder == currentScene) {
             throw new IllegalStateException("Cannot unload currently active scene");
@@ -83,7 +87,7 @@ public final class SceneManager {
         scenes.remove(id);
     }
 
-    public boolean switchToScene(final String id) {
+    public static boolean switchToScene(final String id) {
         if (currentScene != null) {
             currentScene.callLeave();
         }
@@ -97,19 +101,19 @@ public final class SceneManager {
         return false;
     }
 
-    public boolean restartCurrentScene() {
+    public static boolean restartCurrentScene() {
         return switchToScene(currentId);
     }
 
-    public String getCurrentSceneId() {
+    public static String getCurrentSceneId() {
         return currentId;
     }
 
-    public Scene getCurrentScene() {
+    public static Scene getCurrentScene() {
         return currentScene != null ? currentScene.scene : null;
     }
 
-    public boolean shouldSkipCycle() {
+    public static boolean shouldSkipCycle() {
         if (skipCycle) {
             // No more cycles to skip
             skipCycle = false;
@@ -118,19 +122,19 @@ public final class SceneManager {
         return false;
     }
 
-    public void renderCurrentScene(final IGraphics g) {
+    public static void renderCurrentScene(final IGraphics g) {
         if (currentScene != null) {
             currentScene.callRender(g);
         }
     }
 
-    public void resizeCurrentScene(final int x, final int y) {
+    public static void resizeCurrentScene(final int x, final int y) {
         if (currentScene != null) {
             currentScene.callResize(x, y);
         }
     }
 
-    public boolean updateCurrentScene(final float dt) {
+    public static boolean updateCurrentScene(final float dt) {
         if (currentScene != null) {
             return currentScene.callUpdate(dt);
         }
@@ -139,15 +143,15 @@ public final class SceneManager {
         return true;
     }
 
-    public IFrame frame() {
+    public static IFrame frame() {
         return frame;
     }
 
-    public Map<String, Object> resources() {
+    public static Map<String, Object> resources() {
         return res;
     }
 
-    /* package */ void callSceneDeinit() {
+    /* package */ static void callSceneDeinit() {
         scenes.forEach((k, v) -> v.tryDeinit());
         scenes.clear();
     }
