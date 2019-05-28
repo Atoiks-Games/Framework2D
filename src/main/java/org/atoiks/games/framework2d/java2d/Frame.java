@@ -36,7 +36,7 @@ public class Frame extends AbstractFrame {
     private int preFullScreenH;
 
     public Frame(FrameInfo info) {
-        super(info.getFps(), new SceneManager(info));
+        super(info);
         frame = new java.awt.Frame(info.getTitle());
 
         frame.setResizable(info.isResizable());
@@ -121,7 +121,7 @@ public class Frame extends AbstractFrame {
                 g2d.translate(inset.left, inset.top);
 
                 // Render the graphics
-                sceneMgr.renderCurrentScene(graphics);
+                SceneManager.renderCurrentScene(graphics);
 
                 // Dispose the graphics
                 g2d.dispose();
@@ -142,11 +142,11 @@ public class Frame extends AbstractFrame {
         insets = frame.getInsets();
         compMouse.setMouseShift(-insets.left, -insets.top);
 
-        final Scene currentScene = sceneMgr.getCurrentScene();
+        final Scene currentScene = SceneManager.getCurrentScene();
         if (shouldCallResize || lastScene != currentScene) {
             shouldCallResize = false;
             lastScene = currentScene;
-            sceneMgr.resizeCurrentScene(this.getWidth(), this.getHeight());
+            SceneManager.resizeCurrentScene(this.getWidth(), this.getHeight());
         }
     }
 

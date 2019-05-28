@@ -6,16 +6,15 @@ public abstract class AbstractFrame implements IFrame {
 
     protected boolean running = true;
 
-    protected SceneManager sceneMgr;
     private final float secPerUpdate;
     private final float msPerUpdate;
 
-    protected AbstractFrame(final float fps, SceneManager mgr) {
-        this.sceneMgr = mgr;
+    protected AbstractFrame(final FrameInfo info) {
+        final float fps = info.getFps();
         this.secPerUpdate = 1.0f / fps;
         this.msPerUpdate = 1000.0f / fps;
 
-        this.sceneMgr.frame = this;
+        SceneManager.setFrameContext(this, info);
     }
 
     @Override
@@ -43,14 +42,14 @@ public abstract class AbstractFrame implements IFrame {
 
             resizeGame();
             while (steps >= msPerUpdate) {
-                if (!sceneMgr.updateCurrentScene(secPerUpdate)) {
+                if (!SceneManager.updateCurrentScene(secPerUpdate)) {
                     return;
                 }
 
                 // Invoke frame update on input devices
                 Input.invokeFrameUpdate();
 
-                if (sceneMgr.shouldSkipCycle()) {
+                if (SceneManager.shouldSkipCycle()) {
                     // Reset time info
                     previous = System.currentTimeMillis();
                     steps = 0.0f;
@@ -67,9 +66,9 @@ public abstract class AbstractFrame implements IFrame {
     @Override
     public void close() {
         // Ensures leave for Scene gets called
-        sceneMgr.switchToScene(null);
+        SceneManager.switchToScene(null);
         // Deinitalize all scenes
-        sceneMgr.callSceneDeinit();
+        SceneManager.callSceneDeinit();
 
         // Restore the mac stuff
         if (ON_MAC) {
@@ -79,11 +78,6 @@ public abstract class AbstractFrame implements IFrame {
                 //
             }
         }
-    }
-
-    @Override
-    public SceneManager getSceneManager() {
-        return sceneMgr;
     }
 
     protected abstract void resizeGame();
