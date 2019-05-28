@@ -14,7 +14,7 @@ public abstract class AbstractFrame implements IFrame {
         this.secPerUpdate = 1.0f / fps;
         this.msPerUpdate = 1000.0f / fps;
 
-        SceneManager.setFrameContext(this, info);
+        SceneManager.setFrameContext(this);
     }
 
     @Override

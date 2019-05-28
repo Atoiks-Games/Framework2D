@@ -1,7 +1,5 @@
 package org.atoiks.games.framework2d;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.io.Serializable;
 
 public final class FrameInfo implements Serializable {
@@ -10,12 +8,9 @@ public final class FrameInfo implements Serializable {
 
     private String titleName = "";
     private float fps = 30.0f;
-    private Scene[] scenes = new Scene[0];
-    private String firstScene;
     private int width = 800;
     private int height = 600;
     private boolean resizable = false;
-    /* package */ Map<String, Object> res = new HashMap<>();
 
     @Override
     public String toString() {
@@ -34,14 +29,6 @@ public final class FrameInfo implements Serializable {
 
     public float getFps() {
         return fps;
-    }
-
-    public String getFirstScene() {
-        return firstScene;
-    }
-
-    public Scene[] getScenes() {
-        return scenes;
     }
 
     public int getWidth() {
@@ -68,16 +55,6 @@ public final class FrameInfo implements Serializable {
         return this;
     }
 
-    public FrameInfo setFirstScene(String firstScene) {
-        this.firstScene = firstScene;
-        return this;
-    }
-
-    public FrameInfo setScenes(Scene... scenes) {
-        this.scenes = scenes;
-        return this;
-    }
-
     public FrameInfo setWidth(int width) {
         this.width = width;
         return this;
@@ -96,16 +73,6 @@ public final class FrameInfo implements Serializable {
 
     public FrameInfo setResizable(boolean resizable) {
         this.resizable = resizable;
-        return this;
-    }
-
-    public FrameInfo addResources(Map<String, ? extends Object> res) {
-        this.res.putAll(res);
-        return this;
-    }
-
-    public FrameInfo addResource(String name, Object data) {
-        this.res.put(name, data);
         return this;
     }
 }

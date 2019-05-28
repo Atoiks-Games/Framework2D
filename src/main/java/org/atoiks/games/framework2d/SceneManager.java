@@ -18,18 +18,15 @@ public final class SceneManager {
     private SceneManager() {
     }
 
-    public static void setFrameContext(IFrame frame, FrameInfo info) {
-        callSceneDeinit();
-
+    public static void setFrameContext(IFrame frame) {
         SceneManager.frame = frame;
         SceneManager.skipCycle = false;
-        SceneManager.res.putAll(info.res);
+    }
 
-        for (final Scene scene : info.getScenes()) {
+    public static void loadScenes(final Scene... scenes) {
+        for (final Scene scene : scenes) {
             loadScene(scene, false);
         }
-
-        switchToScene(info.getFirstScene());
     }
 
     /**
