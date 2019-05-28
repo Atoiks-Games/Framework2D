@@ -8,15 +8,14 @@ public final class FrameInfo implements Serializable {
 
     private static final long serialVersionUID = -982134728L;
 
-    // Package level access!
-    String titleName = "";
-    float fps = 30.0f;
-    Scene[] scenes = new Scene[0];
-    String firstScene;
-    int width = 800;
-    int height = 600;
-    boolean resizable = false;
-    Map<String, Object> res = new HashMap<>();
+    private String titleName = "";
+    private float fps = 30.0f;
+    private Scene[] scenes = new Scene[0];
+    private String firstScene;
+    private int width = 800;
+    private int height = 600;
+    private boolean resizable = false;
+    /* package */ Map<String, Object> res = new HashMap<>();
 
     @Override
     public String toString() {
