@@ -1,6 +1,10 @@
 package org.atoiks.games.framework2d;
 
-public abstract class Scene {
+import java.io.Serializable;
+
+public abstract class Scene implements Serializable {
+
+    private static final long serialVersionUID = -8839650470492997448L;
 
     protected transient SceneManager scene;
 
@@ -31,8 +35,12 @@ public abstract class Scene {
 
     /**
      * Should stay constant during an object's lifetime!
+     *
+     * @return simple name of the class by default
      */
-    public abstract String getId();
+    public String getId() {
+        return this.getClass().getSimpleName();
+    }
 
     /**
      * The initializer of the scene. Guarantee called before the scene is
