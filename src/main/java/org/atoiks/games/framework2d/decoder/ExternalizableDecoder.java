@@ -12,6 +12,8 @@ public final class ExternalizableDecoder<T extends Externalizable> implements IR
 
     private final Supplier<? extends T> sup;
 
+    private DecodeFailureBehaviour policy = DecodeFailureBehaviour.RETURN_INSTANCE_ON_FAIL;
+
     // Marking it private just in case someone did left out the generic
     // parameter when constructing, in which case, type checking will
     // be completely disabled (which is very bad!)
@@ -19,16 +21,44 @@ public final class ExternalizableDecoder<T extends Externalizable> implements IR
         this.sup = sup;
     }
 
+    public void setDecodeFailureBehaviour(DecodeFailureBehaviour policy) {
+        this.policy = policy != null ? policy : DecodeFailureBehaviour.RETURN_INSTANCE_ON_FAIL;
+    }
+
+    public DecodeFailureBehaviour getDecodeFailureBehaviour() {
+        return policy;
+    }
+
     @Override
     public T decode(InputStream is) throws DecodeException {
+        final T data;
         try {
-            final T data = sup.get();
-            final ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(is));
-            data.readExternal(ois);
-            return data;
+            data = sup.get();
         } catch (Exception ex) {
             throw new DecodeException(ex);
         }
+
+        try {
+            final ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(is));
+            data.readExternal(ois);
+        } catch (Exception ex) {
+            switch (policy) {
+                default:
+                case RETURN_INSTANCE_ON_FAIL:
+                    // This is the default behaviour
+                    // Just print stacktrace, but return the default instance
+                    ex.printStackTrace();
+                    break;
+                case SWALLOW_EXCEPTION_ON_FAIL:
+                    // Just returns the default instance, that's all
+                    // (why would you ever want to do this... oh well)
+                    break;
+                case DECODE_EXCEPTION_ON_FAIL:
+                    throw new DecodeException(ex);
+            }
+        }
+
+        return data;
     }
 
     public static <T extends Externalizable> ExternalizableDecoder<T> forInstance(Supplier<? extends T> instanceSupplier) {
