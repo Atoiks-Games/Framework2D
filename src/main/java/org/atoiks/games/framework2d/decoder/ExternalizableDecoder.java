@@ -12,7 +12,7 @@ public final class ExternalizableDecoder<T extends Externalizable> implements IR
 
     private final Supplier<? extends T> sup;
 
-    private DecodeFailureBehaviour policy = DecodeFailureBehaviour.RETURN_INSTANCE_ON_FAIL;
+    private DecodeFailureBehaviour policy = DecodeFailureBehaviour.DECODE_EXCEPTION_ON_FAIL;
 
     // Marking it private just in case someone did left out the generic
     // parameter when constructing, in which case, type checking will
@@ -22,7 +22,7 @@ public final class ExternalizableDecoder<T extends Externalizable> implements IR
     }
 
     public void setDecodeFailureBehaviour(DecodeFailureBehaviour policy) {
-        this.policy = policy != null ? policy : DecodeFailureBehaviour.RETURN_INSTANCE_ON_FAIL;
+        this.policy = policy != null ? policy : DecodeFailureBehaviour.DECODE_EXCEPTION_ON_FAIL;
     }
 
     public DecodeFailureBehaviour getDecodeFailureBehaviour() {
@@ -43,9 +43,7 @@ public final class ExternalizableDecoder<T extends Externalizable> implements IR
             data.readExternal(ois);
         } catch (Exception ex) {
             switch (policy) {
-                default:
                 case RETURN_INSTANCE_ON_FAIL:
-                    // This is the default behaviour
                     // Just print stacktrace, but return the default instance
                     ex.printStackTrace();
                     break;
@@ -53,7 +51,9 @@ public final class ExternalizableDecoder<T extends Externalizable> implements IR
                     // Just returns the default instance, that's all
                     // (why would you ever want to do this... oh well)
                     break;
+                default:
                 case DECODE_EXCEPTION_ON_FAIL:
+                    // This is the default behaviour
                     throw new DecodeException(ex);
             }
         }
