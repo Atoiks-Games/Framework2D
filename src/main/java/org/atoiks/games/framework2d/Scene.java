@@ -28,41 +28,38 @@ public interface Scene {
     }
 
     /**
-     * ID of the scene, used for scene switching.
+     * Called when the current scene is being pushed or swapped in.
      *
-     * Should stay constant during an object's lifetime!
+     * @param from - The scene that issued the push
      *
-     * @return simple name of the class by default
+     * @see org.atoiks.games.framework2d.SceneManager#pushScene(Scene)
+     * @see org.atoiks.games.framework2d.SceneManager#swapScene(Scene)
      */
-    public default String getId() {
-        return this.getClass().getSimpleName();
+    public default void enter(Scene from) {
     }
 
     /**
-     * The initializer of the scene. Guarantee called before the scene is
-     * entered
-     */
-    public default void init() {
-    }
-
-    /**
-     * The clean up method of the scene. Guarantee called when the scene is
-     * unloaded
-     */
-    public default void deinit() {
-    }
-
-    /**
-     * Called during a scene transition, after leaving the previous scene
+     * Called when the current scene is being popped or swapped out.
      *
-     * @param from - the scene id of thr previous scene
-     */
-    public default void enter(String from) {
-    }
-
-    /**
-     * Called during a scene transition, before entering the next scene.
+     * @see org.atoiks.games.framework2d.SceneManager#popScene()
+     * @see org.atoiks.games.framework2d.SceneManager#swapScene(Scene)
      */
     public default void leave() {
+    }
+
+    /**
+     * Called when scene re-enters due to a pop
+     *
+     * @see org.atoiks.games.framework2d.SceneManager#popScene(Scene)
+     */
+    public default void resume(Scene from) {
+    }
+
+    /**
+     * Called when scene issues a push
+     *
+     * @see org.atoiks.games.framework2d.SceneManager#pushScene(Scene)
+     */
+    public default void suspend() {
     }
 }

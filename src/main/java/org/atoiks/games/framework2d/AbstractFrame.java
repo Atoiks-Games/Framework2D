@@ -66,9 +66,7 @@ public abstract class AbstractFrame implements IFrame {
     @Override
     public void close() {
         // Ensures leave for Scene gets called
-        SceneManager.switchToScene(null);
-        // Deinitalize all scenes
-        SceneManager.callSceneDeinit();
+        SceneManager.clearAllScenes();
 
         // Restore the mac stuff
         if (ON_MAC) {
