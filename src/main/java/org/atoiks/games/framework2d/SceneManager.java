@@ -57,13 +57,12 @@ public final class SceneManager {
     }
 
     public static void pushScene(final Scene next) {
-        if (!sceneStack.isEmpty()) {
-            final Scene current = sceneStack.getFirst();
+        final Scene current = sceneStack.peekFirst();
+        if (current != null) {
             current.suspend();
-
-            next.enter(current);
         }
 
+        next.enter(current);
         sceneStack.addFirst(next);
     }
 
