@@ -81,6 +81,15 @@ public final class SceneManager {
         sceneStack.addFirst(repl);
     }
 
+    public static void unwindToScene(final Scene repl) {
+        clearAllScenes();
+        pushScene(repl);
+    }
+
+    public static int getNumberOfLoadedScenes() {
+        return sceneStack.size();
+    }
+
     /* package */ static void clearAllScenes() {
         while (!sceneStack.isEmpty()) {
             sceneStack.removeFirst().leave();
