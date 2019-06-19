@@ -1,12 +1,9 @@
 package org.atoiks.games.framework2d;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.util.ArrayDeque;
 
 public final class SceneManager {
 
-    private static final Map<String, Object> res = new HashMap<>();
     private static final ArrayDeque<Scene> sceneStack = new ArrayDeque<>();
 
     private static boolean skipCycle;
@@ -50,10 +47,6 @@ public final class SceneManager {
 
     public static IFrame frame() {
         return frame;
-    }
-
-    public static Map<String, Object> resources() {
-        return res;
     }
 
     public static void pushScene(final Scene next) {
