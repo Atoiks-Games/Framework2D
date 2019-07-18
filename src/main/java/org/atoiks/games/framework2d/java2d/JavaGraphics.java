@@ -2,11 +2,14 @@ package org.atoiks.games.framework2d.java2d;
 
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
 import org.atoiks.games.framework2d.*;
+
+import org.atoiks.games.framework2d.resource.Texture;
+
+import org.atoiks.games.framework2d.java2d.resource.JavaTexture;
 
 /* package */ final class JavaGraphics implements IGraphics {
 
@@ -89,23 +92,23 @@ import org.atoiks.games.framework2d.*;
     }
 
     @Override
-    public void drawImage(Image img, int x, int y) {
-        g.drawImage(img, x, y, null);
+    public void drawTexture(Texture img, int x, int y) {
+        g.drawImage(((JavaTexture) img).image, x, y, null);
     }
 
     @Override
-    public void drawImage(Image img, int x, int y, Color bg) {
-        g.drawImage(img, x, y, bg, null);
+    public void drawTexture(Texture img, int x, int y, Color bg) {
+        g.drawImage(((JavaTexture) img).image, x, y, bg, null);
     }
 
     @Override
-    public void drawImage(Image img, int x1, int y1, int x2, int y2) {
-        g.drawImage(img, x1, y1, x2 - x1, y2 - y1, null);
+    public void drawTexture(Texture img, int x1, int y1, int x2, int y2) {
+        g.drawImage(((JavaTexture) img).image, x1, y1, x2 - x1, y2 - y1, null);
     }
 
     @Override
-    public void drawImage(Image img, int x1, int y1, int x2, int y2, Color bg) {
-        g.drawImage(img, x1, y1, x2 - x1, y2 - y1, bg, null);
+    public void drawTexture(Texture img, int x1, int y1, int x2, int y2, Color bg) {
+        g.drawImage(((JavaTexture) img).image, x1, y1, x2 - x1, y2 - y1, bg, null);
     }
 
     @Override
@@ -139,23 +142,23 @@ import org.atoiks.games.framework2d.*;
     }
 
     @Override
-    public void drawImage(Image img, float x, float y) {
-        g.drawImage(img, (int) x, (int) y, null);
+    public void drawTexture(Texture img, float x, float y) {
+        g.drawImage(((JavaTexture) img).image, (int) x, (int) y, null);
     }
 
     @Override
-    public void drawImage(Image img, float x, float y, Color bg) {
-        g.drawImage(img, (int) x, (int) y, bg, null);
+    public void drawTexture(Texture img, float x, float y, Color bg) {
+        g.drawImage(((JavaTexture) img).image, (int) x, (int) y, bg, null);
     }
 
     @Override
-    public void drawImage(Image img, float x1, float y1, float x2, float y2) {
-        g.drawImage(img, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), null);
+    public void drawTexture(Texture img, float x1, float y1, float x2, float y2) {
+        g.drawImage(((JavaTexture) img).image, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), null);
     }
 
     @Override
-    public void drawImage(Image img, float x1, float y1, float x2, float y2, Color bg) {
-        g.drawImage(img, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), bg, null);
+    public void drawTexture(Texture img, float x1, float y1, float x2, float y2, Color bg) {
+        g.drawImage(((JavaTexture) img).image, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), bg, null);
     }
 
     @Override
