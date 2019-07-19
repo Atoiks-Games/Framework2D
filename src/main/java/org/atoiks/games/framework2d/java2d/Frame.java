@@ -15,16 +15,12 @@ import java.awt.image.BufferStrategy;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.Scene;
+import org.atoiks.games.framework2d.IRuntime;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
 
-import org.atoiks.games.framework2d.java2d.decoder.JavaTextureDecoder;
-
 public class Frame extends AbstractFrame {
-
-    // see getTextureDecoder
-    private static volatile JavaTextureDecoder textureDecoder;
 
     private final JavaGraphics graphics;
 
@@ -252,15 +248,7 @@ public class Frame extends AbstractFrame {
     }
 
     @Override
-    public JavaTextureDecoder getTextureDecoder() {
-        JavaTextureDecoder local = textureDecoder;
-        if (local == null) {
-            synchronized (this) {
-                if (textureDecoder == null) {
-                    textureDecoder = local = new JavaTextureDecoder();
-                }
-            }
-        }
-        return local;
+    public IRuntime getRuntime() {
+        return JavaRuntime.getInstance();
     }
 }

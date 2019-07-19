@@ -1,6 +1,6 @@
 package org.atoiks.games.framework2d;
 
-import org.atoiks.games.framework2d.decoder.TextureDecoder;
+import org.atoiks.games.framework2d.IRuntime;
 
 public interface IFrame extends AutoCloseable {
 
@@ -20,5 +20,5 @@ public interface IFrame extends AutoCloseable {
 
     public void setTitle(String title);
 
-    public TextureDecoder getTextureDecoder();
+    public IRuntime getRuntime();
 }
