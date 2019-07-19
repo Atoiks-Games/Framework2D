@@ -12,7 +12,7 @@ import org.atoiks.games.framework2d.decoder.DecodeException;
 
 import org.atoiks.games.framework2d.java2d.resource.JavaTexture;
 
-public final class JavaTextureDecoder implements TextureDecoder<JavaTexture> {
+public final class JavaTextureDecoder implements TextureDecoder {
 
     @Override
     public JavaTexture decode(InputStream is) throws DecodeException {
