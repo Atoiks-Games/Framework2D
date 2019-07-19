@@ -24,7 +24,7 @@ import org.atoiks.games.framework2d.java2d.decoder.JavaTextureDecoder;
 public class Frame extends AbstractFrame {
 
     // see getTextureDecoder
-    private static JavaTextureDecoder textureDecoder;
+    private static volatile JavaTextureDecoder textureDecoder;
 
     private final JavaGraphics graphics;
 
@@ -255,7 +255,7 @@ public class Frame extends AbstractFrame {
     public JavaTextureDecoder getTextureDecoder() {
         JavaTextureDecoder local = textureDecoder;
         if (local == null) {
-            synchronized (textureDecoder) {
+            synchronized (this) {
                 if (textureDecoder == null) {
                     textureDecoder = local = new JavaTextureDecoder();
                 }
