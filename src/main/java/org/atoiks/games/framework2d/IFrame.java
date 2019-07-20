@@ -8,8 +8,6 @@ public interface IFrame extends AutoCloseable {
     public void loop();
     public void close();
 
-    public Object getRawFrame();
-
     public void setFullScreen(boolean status);
     public void setSize(int width, int height);
     public int getWidth();

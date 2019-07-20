@@ -162,11 +162,6 @@ public class Frame extends AbstractFrame {
     }
 
     @Override
-    public java.awt.Frame getRawFrame() {
-        return frame;
-    }
-
-    @Override
     public void setVisible(final boolean status) {
         frame.setVisible(status);
     }
