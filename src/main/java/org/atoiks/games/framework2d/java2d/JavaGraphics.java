@@ -11,7 +11,7 @@ import org.atoiks.games.framework2d.resource.Texture;
 
 import org.atoiks.games.framework2d.java2d.resource.JavaTexture;
 
-/* package */ final class JavaGraphics implements IGraphics {
+public final class JavaGraphics implements IGraphics {
 
     /* package */ final IFrame parent;
 
@@ -24,16 +24,6 @@ import org.atoiks.games.framework2d.java2d.resource.JavaTexture;
     @Override
     public Graphics2D getRawGraphics() {
         return g;
-    }
-
-    @Override
-    public void setFont(Font f) {
-        g.setFont(f);
-    }
-
-    @Override
-    public Font getFont() {
-        return g.getFont();
     }
 
     @Override
@@ -112,11 +102,6 @@ import org.atoiks.games.framework2d.java2d.resource.JavaTexture;
     }
 
     @Override
-    public void drawString(String str, int x, int y) {
-        g.drawString(str, x, y);
-    }
-
-    @Override
     public void drawLine(int x1, int y1, int x2, int y2) {
         g.drawLine(x1, y1, x2, y2);
     }
@@ -159,11 +144,6 @@ import org.atoiks.games.framework2d.java2d.resource.JavaTexture;
     @Override
     public void drawTexture(Texture img, float x1, float y1, float x2, float y2, Color bg) {
         g.drawImage(((JavaTexture) img).image, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), bg, null);
-    }
-
-    @Override
-    public void drawString(String str, float x, float y) {
-        g.drawString(str, x, y);
     }
 
     @Override

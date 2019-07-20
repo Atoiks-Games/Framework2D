@@ -1,6 +1,5 @@
 package org.atoiks.games.framework2d;
 
-import java.awt.Font;
 import java.awt.Color;
 
 import org.atoiks.games.framework2d.resource.Texture;
@@ -8,9 +7,6 @@ import org.atoiks.games.framework2d.resource.Texture;
 public interface IGraphics {
 
     public Object getRawGraphics();
-
-    public void setFont(Font f);
-    public Font getFont();
 
     public void setColor(Color color);
     public void setColor(float r, float g, float b, float a);
@@ -31,7 +27,6 @@ public interface IGraphics {
     public void drawTexture(Texture img, int x1, int y1, int x2, int y2);
     public void drawTexture(Texture img, int x1, int y1, int x2, int y2, Color bg);
 
-    public void drawString(String str, int x, int y);
     public void drawLine(int x1, int y1, int x2, int y2);
 
     public void drawOval(int x1, int y1, int x2, int y2);
@@ -52,7 +47,6 @@ public interface IGraphics {
     public void drawTexture(Texture img, float x1, float y1, float x2, float y2);
     public void drawTexture(Texture img, float x1, float y1, float x2, float y2, Color bg);
 
-    public void drawString(String str, float x, float y);
     public void drawLine(float x1, float y1, float x2, float y2);
     public default void drawPoints(final float[] coords) {
         final int count = coords.length / 2;
