@@ -1,7 +1,4 @@
 package org.atoiks.games.framework2d.lwjgl3;
-
-import java.awt.MouseInfo;
-
 import java.util.Arrays;
 
 import org.lwjgl.glfw.GLFWScrollCallback;
@@ -9,11 +6,10 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_UNKNOWN;
-
 import org.atoiks.games.framework2d.IMouse;
+
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LAST;
 
 /* package */ final class Mouse implements IMouse {
 
@@ -62,9 +58,8 @@ import org.atoiks.games.framework2d.IMouse;
     };
 
     public Mouse() {
-        final int btns = MouseInfo.getNumberOfButtons();
-        state = new boolean[btns];
-        poll = new MouseState[btns];
+        state = new boolean[GLFW_MOUSE_BUTTON_LAST];
+        poll = new MouseState[GLFW_MOUSE_BUTTON_LAST];
         Arrays.fill(poll, MouseState.RELEASED);
     }
 
@@ -103,13 +98,12 @@ import org.atoiks.games.framework2d.IMouse;
         return localY;
     }
 
-    @Override
     public int getWheelRotation() {
         return wheelRot;
     }
 
     @Override
-    public boolean isButtonUp(int btn) {
+    public boolean isButtonDown(int btn) {
         if (btn < poll.length) {
             final MouseState st = poll[btn];
             return st == MouseState.HELD || st == MouseState.PRESSED;
@@ -118,14 +112,13 @@ import org.atoiks.games.framework2d.IMouse;
     }
 
     @Override
-    public boolean isButtonDown(int btn) {
+    public boolean isButtonUp(int btn) {
         if (btn < poll.length) {
             return poll[btn] == MouseState.RELEASED;
         }
         return false;
     }
 
-    @Override
     public boolean isButtonClicked(int btn) {
         if (btn < poll.length) {
             return poll[btn] == MouseState.PRESSED;
@@ -133,12 +126,10 @@ import org.atoiks.games.framework2d.IMouse;
         return false;
     }
 
-    @Override
     public boolean isInFrame() {
         return inFrame;
     }
 
-    @Override
     public boolean mouseMoved() {
         return moved;
     }
