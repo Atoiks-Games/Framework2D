@@ -83,7 +83,7 @@ public final class SceneManager {
         return sceneStack.size();
     }
 
-    /* package */ static void clearAllScenes() {
+    public static void clearAllScenes() {
         while (!sceneStack.isEmpty()) {
             sceneStack.removeFirst().leave();
         }
