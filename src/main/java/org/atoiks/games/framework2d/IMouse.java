@@ -7,28 +7,14 @@ public interface IMouse extends IInputDevice {
      *
      * @return x relative to frame
      */
-    public int getLocalX();
+    public int getX();
 
     /**
      * Returns Y-coordinate of mouse relative to frame
      *
      * @return y relative to frame
      */
-    public int getLocalY();
-
-    /**
-     * Returns X-coordinate of mouse relative to screen
-     *
-     * @return x relative to screen
-     */
-    public int getGlobalX();
-
-    /**
-     * Returns Y-coordinate of mouse relative to screen
-     *
-     * @return y relative to screen
-     */
-    public int getGlobalY();
+    public int getY();
 
     /**
      * Returns the amount of rotating on the mouse wheel

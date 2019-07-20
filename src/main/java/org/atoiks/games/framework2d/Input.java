@@ -107,20 +107,12 @@ public final class Input {
 
     // ------ Mouse-delegate methods ------
 
-    public static int getLocalX() {
-        return compMouse.getLocalX();
+    public static int getMouseX() {
+        return compMouse.getX();
     }
 
-    public static int getLocalY() {
-        return compMouse.getLocalY();
-    }
-
-    public static int getGlobalX() {
-        return compMouse.getGlobalX();
-    }
-
-    public static int getGlobalY() {
-        return compMouse.getGlobalY();
+    public static int getMouseY() {
+        return compMouse.getY();
     }
 
     public static int getWheelRotation() {

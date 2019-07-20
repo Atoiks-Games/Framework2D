@@ -21,7 +21,6 @@ import org.atoiks.games.framework2d.IMouse;
     private int shiftY;
 
     private int localX, localY;
-    private int globalX, globalY;
     private int wheelRot;
     private boolean inFrame;
     private boolean moved;
@@ -44,7 +43,7 @@ import org.atoiks.games.framework2d.IMouse;
         wheelRot = 0;
         moved = false;
 
-        localX = localY = globalX = globalY = 0;
+        localX = localY = 0;
         inFrame = false;
     }
 
@@ -64,23 +63,13 @@ import org.atoiks.games.framework2d.IMouse;
     }
 
     @Override
-    public int getLocalX() {
+    public int getX() {
         return localX + shiftX;
     }
 
     @Override
-    public int getLocalY() {
+    public int getY() {
         return localY + shiftY;
-    }
-
-    @Override
-    public int getGlobalX() {
-        return globalX;
-    }
-
-    @Override
-    public int getGlobalY() {
-        return globalY;
     }
 
     @Override
@@ -126,8 +115,6 @@ import org.atoiks.games.framework2d.IMouse;
     private synchronized void defaultMouseEventHandler(final MouseEvent e) {
         localX = e.getX();
         localY = e.getY();
-        globalX = e.getXOnScreen();
-        globalY = e.getYOnScreen();
         moved = true;
     }
 
