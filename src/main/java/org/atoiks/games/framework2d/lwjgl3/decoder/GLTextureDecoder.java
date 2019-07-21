@@ -8,16 +8,10 @@ import java.nio.ByteBuffer;
 
 import java.util.concurrent.Callable;
 
-import org.lwjgl.BufferUtils;
-
-import org.lwjgl.stb.STBTTFontinfo;
-
 import org.lwjgl.system.MemoryStack;
 
 import org.atoiks.games.framework2d.decoder.TextureDecoder;
 import org.atoiks.games.framework2d.decoder.DecodeException;
-
-import org.atoiks.games.framework2d.lwjgl3.LwjglRuntime;
 
 import org.atoiks.games.framework2d.lwjgl3.resource.GLTexture;
 
