@@ -155,21 +155,83 @@ import static org.lwjgl.glfw.GLFW.*;
             case GLFW_KEY_Z: return KeyCode.KEY_Z;
 
             case GLFW_KEY_SEMICOLON: return KeyCode.KEY_SEMICOLON;
-            case GLFW_KEY_EQUAL: return KeyCode.KEY_EQUAL;
+            case GLFW_KEY_COMMA: return KeyCode.KEY_COMMA;
+            case GLFW_KEY_PERIOD: return KeyCode.KEY_PERIOD;
             case GLFW_KEY_LEFT_BRACKET: return KeyCode.KEY_LBRACKET;
             case GLFW_KEY_RIGHT_BRACKET: return KeyCode.KEY_RBRACKET;
+            case GLFW_KEY_SLASH: return KeyCode.KEY_SLASH;
+            case GLFW_KEY_BACKSLASH: return KeyCode.KEY_BACKSLASH;
+            case GLFW_KEY_GRAVE_ACCENT: return KeyCode.KEY_GRAVE_ACCENT;
+            case GLFW_KEY_APOSTROPHE: return KeyCode.KEY_APOSTROPHE;
+            case GLFW_KEY_EQUAL: return KeyCode.KEY_EQUAL;
+            case GLFW_KEY_MINUS: return KeyCode.KEY_MINUS;
 
+            case GLFW_KEY_SPACE: return KeyCode.KEY_SPACE;
             case GLFW_KEY_TAB: return KeyCode.KEY_TAB;
             case GLFW_KEY_ESCAPE: return KeyCode.KEY_ESCAPE;
             case GLFW_KEY_ENTER: return KeyCode.KEY_ENTER;
+            case GLFW_KEY_BACKSPACE: return KeyCode.KEY_BACKSPACE;
+            case GLFW_KEY_DELETE: return KeyCode.KEY_DELETE;
+
+            case GLFW_KEY_KP_DECIMAL: return KeyCode.KEY_KP_DECIMAL;
+            case GLFW_KEY_KP_EQUAL: return KeyCode.KEY_KP_EQUAL;
+            case GLFW_KEY_KP_ENTER: return KeyCode.KEY_KP_ENTER;
+            case GLFW_KEY_KP_ADD: return KeyCode.KEY_KP_ADD;
+            case GLFW_KEY_KP_SUBTRACT: return KeyCode.KEY_KP_SUBTRACT;
+            case GLFW_KEY_KP_MULTIPLY: return KeyCode.KEY_KP_MULTIPLY;
+            case GLFW_KEY_KP_DIVIDE: return KeyCode.KEY_KP_DIVIDE;
+
+            case GLFW_KEY_F1: return KeyCode.KEY_F1;
+            case GLFW_KEY_F2: return KeyCode.KEY_F2;
+            case GLFW_KEY_F3: return KeyCode.KEY_F3;
+            case GLFW_KEY_F4: return KeyCode.KEY_F4;
+            case GLFW_KEY_F5: return KeyCode.KEY_F5;
+            case GLFW_KEY_F6: return KeyCode.KEY_F6;
+            case GLFW_KEY_F7: return KeyCode.KEY_F7;
+            case GLFW_KEY_F8: return KeyCode.KEY_F8;
+            case GLFW_KEY_F9: return KeyCode.KEY_F9;
+            case GLFW_KEY_F10: return KeyCode.KEY_F10;
+            case GLFW_KEY_F11: return KeyCode.KEY_F11;
+            case GLFW_KEY_F12: return KeyCode.KEY_F12;
+            case GLFW_KEY_F13: return KeyCode.KEY_F13;
+            case GLFW_KEY_F14: return KeyCode.KEY_F14;
+            case GLFW_KEY_F15: return KeyCode.KEY_F15;
+            case GLFW_KEY_F16: return KeyCode.KEY_F16;
+            case GLFW_KEY_F17: return KeyCode.KEY_F17;
+            case GLFW_KEY_F18: return KeyCode.KEY_F18;
+            case GLFW_KEY_F19: return KeyCode.KEY_F19;
+            case GLFW_KEY_F20: return KeyCode.KEY_F20;
+            case GLFW_KEY_F21: return KeyCode.KEY_F21;
+            case GLFW_KEY_F22: return KeyCode.KEY_F22;
+            case GLFW_KEY_F23: return KeyCode.KEY_F23;
+            case GLFW_KEY_F24: return KeyCode.KEY_F24;
 
             case GLFW_KEY_UP: return KeyCode.KEY_UP;
             case GLFW_KEY_DOWN: return KeyCode.KEY_DOWN;
             case GLFW_KEY_LEFT: return KeyCode.KEY_LEFT;
             case GLFW_KEY_RIGHT: return KeyCode.KEY_RIGHT;
 
+            case GLFW_KEY_PAGE_UP: return KeyCode.KEY_PAGE_UP;
+            case GLFW_KEY_PAGE_DOWN: return KeyCode.KEY_PAGE_DOWN;
+            case GLFW_KEY_HOME: return KeyCode.KEY_HOME;
+            case GLFW_KEY_END: return KeyCode.KEY_END;
+            case GLFW_KEY_INSERT: return KeyCode.KEY_INSERT;
+            case GLFW_KEY_MENU: return KeyCode.KEY_MENU;
+            case GLFW_KEY_PAUSE: return KeyCode.KEY_PAUSE;
+            case GLFW_KEY_PRINT_SCREEN: return KeyCode.KEY_PRINTSCREEN;
+
+            case GLFW_KEY_CAPS_LOCK: return KeyCode.KEY_CAPS_LOCK;
+            case GLFW_KEY_SCROLL_LOCK: return KeyCode.KEY_SCROLL_LOCK;
+            case GLFW_KEY_NUM_LOCK: return KeyCode.KEY_NUM_LOCK;
+
             case GLFW_KEY_LEFT_SHIFT: return KeyCode.KEY_LSHIFT;
             case GLFW_KEY_RIGHT_SHIFT: return KeyCode.KEY_RSHIFT;
+            case GLFW_KEY_LEFT_CONTROL: return KeyCode.KEY_LCTRL;
+            case GLFW_KEY_RIGHT_CONTROL: return KeyCode.KEY_RCTRL;
+            case GLFW_KEY_LEFT_ALT: return KeyCode.KEY_LALT;
+            case GLFW_KEY_RIGHT_ALT: return KeyCode.KEY_RALT;
+            case GLFW_KEY_LEFT_SUPER: return KeyCode.KEY_LSUPER;
+            case GLFW_KEY_RIGHT_SUPER: return KeyCode.KEY_RSUPER;
 
             // keys that we do not recognize
             case GLFW_KEY_UNKNOWN:

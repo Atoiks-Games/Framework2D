@@ -146,21 +146,89 @@ import static java.awt.event.KeyEvent.*;
             case VK_Z: return KeyCode.KEY_Z;
 
             case VK_SEMICOLON: return KeyCode.KEY_SEMICOLON;
-            case VK_EQUALS: return KeyCode.KEY_EQUAL;
+            case VK_COMMA: return KeyCode.KEY_COMMA;
+            case VK_PERIOD: return KeyCode.KEY_PERIOD;
             case VK_OPEN_BRACKET: return KeyCode.KEY_LBRACKET;
             case VK_CLOSE_BRACKET: return KeyCode.KEY_RBRACKET;
+            case VK_SLASH: return KeyCode.KEY_SLASH;
+            case VK_BACK_SLASH: return KeyCode.KEY_BACKSLASH;
+            case VK_BACK_QUOTE: return KeyCode.KEY_GRAVE_ACCENT;
+            case VK_QUOTE: return KeyCode.KEY_APOSTROPHE;
+            case VK_MINUS: return KeyCode.KEY_MINUS;
 
+            case VK_SPACE: return KeyCode.KEY_SPACE;
             case VK_TAB: return KeyCode.KEY_TAB;
             case VK_ESCAPE: return KeyCode.KEY_ESCAPE;
-            case VK_ENTER: return KeyCode.KEY_ENTER;
+            case VK_BACK_SPACE: return KeyCode.KEY_BACKSPACE;
+            case VK_DELETE: return KeyCode.KEY_DELETE;
+
+            case VK_DECIMAL: return KeyCode.KEY_KP_DECIMAL;
+            case VK_ADD: return KeyCode.KEY_KP_ADD;
+            case VK_SUBTRACT: return KeyCode.KEY_KP_SUBTRACT;
+            case VK_MULTIPLY: return KeyCode.KEY_KP_MULTIPLY;
+            case VK_DIVIDE: return KeyCode.KEY_KP_DIVIDE;
+
+            case VK_F1: return KeyCode.KEY_F1;
+            case VK_F2: return KeyCode.KEY_F2;
+            case VK_F3: return KeyCode.KEY_F3;
+            case VK_F4: return KeyCode.KEY_F4;
+            case VK_F5: return KeyCode.KEY_F5;
+            case VK_F6: return KeyCode.KEY_F6;
+            case VK_F7: return KeyCode.KEY_F7;
+            case VK_F8: return KeyCode.KEY_F8;
+            case VK_F9: return KeyCode.KEY_F9;
+            case VK_F10: return KeyCode.KEY_F10;
+            case VK_F11: return KeyCode.KEY_F11;
+            case VK_F12: return KeyCode.KEY_F12;
+            case VK_F13: return KeyCode.KEY_F13;
+            case VK_F14: return KeyCode.KEY_F14;
+            case VK_F15: return KeyCode.KEY_F15;
+            case VK_F16: return KeyCode.KEY_F16;
+            case VK_F17: return KeyCode.KEY_F17;
+            case VK_F18: return KeyCode.KEY_F18;
+            case VK_F19: return KeyCode.KEY_F19;
+            case VK_F20: return KeyCode.KEY_F20;
+            case VK_F21: return KeyCode.KEY_F21;
+            case VK_F22: return KeyCode.KEY_F22;
+            case VK_F23: return KeyCode.KEY_F23;
+            case VK_F24: return KeyCode.KEY_F24;
+
             case VK_UP: return KeyCode.KEY_UP;
             case VK_DOWN: return KeyCode.KEY_DOWN;
             case VK_LEFT: return KeyCode.KEY_LEFT;
             case VK_RIGHT: return KeyCode.KEY_RIGHT;
 
+            case VK_PAGE_UP: return KeyCode.KEY_PAGE_UP;
+            case VK_PAGE_DOWN: return KeyCode.KEY_PAGE_DOWN;
+            case VK_HOME: return KeyCode.KEY_HOME;
+            case VK_END: return KeyCode.KEY_END;
+            case VK_INSERT: return KeyCode.KEY_INSERT;
+            case VK_CONTEXT_MENU: return KeyCode.KEY_MENU;
+            case VK_PAUSE: return KeyCode.KEY_PAUSE;
+            case VK_PRINTSCREEN: return KeyCode.KEY_PRINTSCREEN;
+
+            case VK_CAPS_LOCK: return KeyCode.KEY_CAPS_LOCK;
+            case VK_SCROLL_LOCK: return KeyCode.KEY_SCROLL_LOCK;
+            case VK_NUM_LOCK: return KeyCode.KEY_NUM_LOCK;
+
             // keys that need a bit more work
             case VK_SHIFT: return e.getKeyLocation() == KEY_LOCATION_LEFT
                     ? KeyCode.KEY_LSHIFT : KeyCode.KEY_RSHIFT;
+
+            case VK_CONTROL: return e.getKeyLocation() == KEY_LOCATION_LEFT
+                    ? KeyCode.KEY_LCTRL : KeyCode.KEY_RCTRL;
+
+            case VK_ALT: return e.getKeyLocation() == KEY_LOCATION_LEFT
+                    ? KeyCode.KEY_LALT : KeyCode.KEY_RALT;
+
+            case VK_WINDOWS: // Treat windows key as if it was the meta key!
+            case VK_META: return e.getKeyLocation() == KEY_LOCATION_LEFT
+                    ? KeyCode.KEY_LSUPER : KeyCode.KEY_RSUPER;
+
+            case VK_EQUALS: return e.getKeyLocation() == KEY_LOCATION_STANDARD
+                    ? KeyCode.KEY_EQUAL : KeyCode.KEY_KP_EQUAL;
+            case VK_ENTER: return e.getKeyLocation() == KEY_LOCATION_STANDARD
+                    ? KeyCode.KEY_ENTER : KeyCode.KEY_KP_ENTER;
 
             // keys that we do not recognize
             case VK_UNDEFINED:
