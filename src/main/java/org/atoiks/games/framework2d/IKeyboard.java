@@ -9,7 +9,7 @@ public interface IKeyboard extends IInputDevice {
      *
      * @return true if not being pressed
      */
-    public boolean isKeyUp(int kc);
+    public boolean isKeyUp(KeyCode kc);
 
     /**
      * Checks if key is being held down
@@ -18,7 +18,7 @@ public interface IKeyboard extends IInputDevice {
      *
      * @return true if being held down
      */
-    public boolean isKeyDown(int kc);
+    public boolean isKeyDown(KeyCode kc);
 
     /**
      * Checks if key is typed
@@ -27,12 +27,12 @@ public interface IKeyboard extends IInputDevice {
      *
      * @return true if typed
      */
-    public boolean isKeyPressed(int kc);
+    public boolean isKeyPressed(KeyCode kc);
 
     /**
-     * @return the last held key or VK_UNDEFINED if no key is pressed
+     * @return the last held key or KEY_UNDEFINED if no key is pressed
      */
-    public int getLastDownKey();
+    public KeyCode getLastDownKey();
 
     /**
      * Decides whether or not typed characters are handled. In order for

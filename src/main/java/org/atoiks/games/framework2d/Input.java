@@ -81,19 +81,19 @@ public final class Input {
 
     // ------ Keyboard-delegate methods ------
 
-    public static boolean isKeyUp(int kc) {
+    public static boolean isKeyUp(KeyCode kc) {
         return compKeyboard.isKeyUp(kc);
     }
 
-    public static boolean isKeyDown(int kc) {
+    public static boolean isKeyDown(KeyCode kc) {
         return compKeyboard.isKeyDown(kc);
     }
 
-    public static boolean isKeyPressed(int kc) {
+    public static boolean isKeyPressed(KeyCode kc) {
         return compKeyboard.isKeyPressed(kc);
     }
 
-    public static int getLastDownKey() {
+    public static KeyCode getLastDownKey() {
         return compKeyboard.getLastDownKey();
     }
 
