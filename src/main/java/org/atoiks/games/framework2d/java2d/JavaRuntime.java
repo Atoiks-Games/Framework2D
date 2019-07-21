@@ -46,7 +46,7 @@ public final class JavaRuntime implements IRuntime {
     }
 
     @Override
-    public TextureDecoder getTextureDecoder() {
+    public TextureDecoder<?> getTextureDecoder() {
         JavaTextureDecoder local = textureDecoder;
         if (local == null) {
             synchronized (this) {
