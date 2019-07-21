@@ -1,5 +1,7 @@
 package org.atoiks.games.framework2d;
 
+import java.util.concurrent.FutureTask;
+
 public abstract class AbstractFrame implements IFrame {
 
     private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
@@ -60,6 +62,7 @@ public abstract class AbstractFrame implements IFrame {
 
             // Force redraw here
             renderGame();
+            pollDelayedTasks();
         }
     }
 
@@ -75,6 +78,13 @@ public abstract class AbstractFrame implements IFrame {
             } catch (Exception ex) {
                 //
             }
+        }
+    }
+
+    private void pollDelayedTasks() {
+        final FutureTask<?> task = ResourceManager.pollNextTask();
+        if (task != null) {
+            task.run();
         }
     }
 
