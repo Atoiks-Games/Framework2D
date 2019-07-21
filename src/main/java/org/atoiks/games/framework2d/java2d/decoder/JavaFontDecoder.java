@@ -10,7 +10,7 @@ import org.atoiks.games.framework2d.decoder.DecodeException;
 
 import org.atoiks.games.framework2d.java2d.resource.JavaFont;
 
-public final class JavaFontDecoder implements FontDecoder {
+public final class JavaFontDecoder implements FontDecoder<JavaFont> {
 
     @Override
     public JavaFont decode(InputStream is) throws DecodeException {

@@ -33,7 +33,7 @@ public final class JavaRuntime implements IRuntime {
     }
 
     @Override
-    public FontDecoder getFontDecoder() {
+    public FontDecoder<?> getFontDecoder() {
         JavaFontDecoder local = fontDecoder;
         if (local == null) {
             synchronized (this) {

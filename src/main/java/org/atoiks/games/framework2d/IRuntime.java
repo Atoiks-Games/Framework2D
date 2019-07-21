@@ -7,6 +7,6 @@ public interface IRuntime {
 
     public IFrame createFrame(FrameInfo info);
 
-    public FontDecoder getFontDecoder();
+    public FontDecoder<?> getFontDecoder();
     public TextureDecoder<?> getTextureDecoder();
 }
