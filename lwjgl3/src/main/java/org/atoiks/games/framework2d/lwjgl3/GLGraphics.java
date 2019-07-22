@@ -76,11 +76,6 @@ import static org.lwjgl.opengl.GL11.*;
     }
 
     @Override
-    public void clearRegion(int x1, int y1, int x2, int y2) {
-        throw new UnsupportedOperationException("Rip clearRegion!");
-    }
-
-    @Override
     public void scale(float x, float y) {
         glScalef(x, y, 1.0f);
     }

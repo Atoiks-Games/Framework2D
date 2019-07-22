@@ -14,7 +14,6 @@ public interface IGraphics {
     public void setClearColor(float r, float g, float b, float a);
     public Color getClearColor();
     public void clearGraphics();
-    public void clearRegion(int x1, int y1, int x2, int y2);
 
     public void scale(float x, float y);
     public void translate(float x, float y);

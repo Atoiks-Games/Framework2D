@@ -61,11 +61,6 @@ public final class JavaGraphics implements IGraphics {
     }
 
     @Override
-    public void clearRegion(int x1, int y1, int x2, int y2) {
-        g.clearRect(x1, y1, x2 - x1, y2 - y1);
-    }
-
-    @Override
     public void scale(float x, float y) {
         g.scale(x, y);
     }
