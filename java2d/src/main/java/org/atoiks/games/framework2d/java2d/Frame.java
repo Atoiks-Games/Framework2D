@@ -24,6 +24,8 @@ public class Frame extends AbstractFrame {
 
     private final JavaGraphics graphics;
 
+    private final JavaRuntime rt;
+
     private final java.awt.Frame frame;
     private final Mouse compMouse;
 
@@ -36,8 +38,10 @@ public class Frame extends AbstractFrame {
     private int preFullScreenW;
     private int preFullScreenH;
 
-    public Frame(FrameInfo info) {
+    public Frame(FrameInfo info, JavaRuntime rt) {
         super(info);
+        this.rt = rt;
+
         frame = new java.awt.Frame(info.getTitle());
 
         frame.setResizable(info.isResizable());
@@ -244,6 +248,6 @@ public class Frame extends AbstractFrame {
 
     @Override
     public IRuntime getRuntime() {
-        return JavaRuntime.getInstance();
+        return this.rt;
     }
 }

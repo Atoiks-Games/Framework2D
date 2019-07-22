@@ -13,48 +13,22 @@ public final class JavaRuntime implements IRuntime {
 
     private static class SingletonHelper {
 
-        private static final JavaRuntime INST_RUNTIME = new JavaRuntime();
-    }
-
-    private static volatile JavaFontDecoder fontDecoder;
-    private static volatile JavaTextureDecoder textureDecoder;
-
-    private JavaRuntime() {
-        // Singleton
-    }
-
-    public static JavaRuntime getInstance() {
-        return SingletonHelper.INST_RUNTIME;
+        private static final JavaFontDecoder fontDecoder = new JavaFontDecoder();
+        private static final JavaTextureDecoder textureDecoder = new JavaTextureDecoder();
     }
 
     @Override
     public Frame createFrame(FrameInfo info) {
-        return new Frame(info);
+        return new Frame(info, this);
     }
 
     @Override
     public FontDecoder<?> getFontDecoder() {
-        JavaFontDecoder local = fontDecoder;
-        if (local == null) {
-            synchronized (this) {
-                if (fontDecoder == null) {
-                    fontDecoder = local = new JavaFontDecoder();
-                }
-            }
-        }
-        return local;
+        return SingletonHelper.fontDecoder;
     }
 
     @Override
     public TextureDecoder<?> getTextureDecoder() {
-        JavaTextureDecoder local = textureDecoder;
-        if (local == null) {
-            synchronized (this) {
-                if (textureDecoder == null) {
-                    textureDecoder = local = new JavaTextureDecoder();
-                }
-            }
-        }
-        return local;
+        return SingletonHelper.textureDecoder;
     }
 }
