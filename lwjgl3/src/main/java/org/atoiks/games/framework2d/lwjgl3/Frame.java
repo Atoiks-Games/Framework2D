@@ -145,9 +145,6 @@ public final class Frame extends AbstractFrame {
     @Override
     public void renderGame() {
         glLoadIdentity();
-
-        // Perform rendering and stuff
-        glClear(GL_DEPTH_BUFFER_BIT);
         SceneManager.renderCurrentScene(graphics);
 
         glfwSwapBuffers(this.window);
