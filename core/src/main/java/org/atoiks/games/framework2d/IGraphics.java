@@ -6,8 +6,6 @@ import org.atoiks.games.framework2d.resource.Texture;
 
 public interface IGraphics {
 
-    public Object getRawGraphics();
-
     public void setColor(Color color);
     public void setColor(float r, float g, float b, float a);
     public Color getColor();

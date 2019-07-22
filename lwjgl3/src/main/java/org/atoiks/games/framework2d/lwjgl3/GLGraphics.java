@@ -20,12 +20,6 @@ import static org.lwjgl.opengl.GL11.*;
     private final float[] fgColor = new float[4];
 
     @Override
-    public Object getRawGraphics() {
-        // It just calls a bunch of static methods...
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setColor(Color color) {
         glColor4fv(color.getRGBComponents(this.fgColor));
     }

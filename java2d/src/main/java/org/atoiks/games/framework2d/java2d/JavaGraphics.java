@@ -21,9 +21,8 @@ public final class JavaGraphics implements IGraphics {
         this.parent = parent;
     }
 
-    @Override
-    public Graphics2D getRawGraphics() {
-        return g;
+    public Graphics2D getGraphics2D() {
+        return this.g;
     }
 
     @Override

@@ -28,7 +28,7 @@ public final class JavaFont implements Font {
 
     @Override
     public void renderText(IGraphics g, String text, float x, float y) {
-        final Graphics2D g2d = ((JavaGraphics) g).getRawGraphics();
+        final Graphics2D g2d = ((JavaGraphics) g).getGraphics2D();
         g2d.setFont(this.font);
         g2d.drawString(text, x, y);
     }
