@@ -17,7 +17,7 @@ Then you would pick one of the following as `runtimeOnly` depending on the backe
 
 You would acquire the selected backend using `java.util.ServiceLoader.load(IRuntime.class)`.
 
-An example of a single-moduled project referencing the lwjgl module 1.1.0 release:
+An example of a single-moduled project referencing the lwjgl module 2.0 release:
 
 ```groovy
 // build.gradle
@@ -49,9 +49,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Atoiks-Games.Framework2D:core:1.1.0'
+    implementation 'com.github.Atoiks-Games.Framework2D:core:2.0'
 
-    runtimeOnly 'com.github.Atoiks-Games.Framework2D:lwjgl3:1.1.0'
+    runtimeOnly 'com.github.Atoiks-Games.Framework2D:lwjgl3:2.0'
 
     runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
