@@ -13,48 +13,22 @@ public final class LwjglRuntime implements IRuntime {
 
     private static class SingletonHelper {
 
-        private static final LwjglRuntime INST_RUNTIME = new LwjglRuntime();
-    }
-
-    private static volatile GLFontDecoder fontDecoder;
-    private static volatile GLTextureDecoder textureDecoder;
-
-    private LwjglRuntime() {
-        // Singleton
-    }
-
-    public static LwjglRuntime getInstance() {
-        return SingletonHelper.INST_RUNTIME;
+        private static final GLFontDecoder fontDecoder = new GLFontDecoder();
+        private static final GLTextureDecoder textureDecoder = new GLTextureDecoder();
     }
 
     @Override
     public Frame createFrame(FrameInfo info) {
-        return new Frame(info);
+        return new Frame(info, this);
     }
 
     @Override
     public FontDecoder getFontDecoder() {
-        GLFontDecoder local = fontDecoder;
-        if (local == null) {
-            synchronized (this) {
-                if (fontDecoder == null) {
-                    fontDecoder = local = new GLFontDecoder();
-                }
-            }
-        }
-        return local;
+        return SingletonHelper.fontDecoder;
     }
 
     @Override
     public TextureDecoder<?> getTextureDecoder() {
-        GLTextureDecoder local = textureDecoder;
-        if (local == null) {
-            synchronized (this) {
-                if (textureDecoder == null) {
-                    textureDecoder = local = new GLTextureDecoder();
-                }
-            }
-        }
-        return local;
+        return SingletonHelper.textureDecoder;
     }
 }

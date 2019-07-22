@@ -34,6 +34,8 @@ public final class Frame implements IFrame {
 
     private final GLGraphics graphics = new GLGraphics();
 
+    private final LwjglRuntime rt;
+
     private final long window;
     private final float secPerUpdate;
     private final float msPerUpdate;
@@ -45,7 +47,9 @@ public final class Frame implements IFrame {
     private int preFullScreenW = 0;
     private int preFullScreenH = 0;
 
-    public Frame(final FrameInfo info) {
+    public Frame(final FrameInfo info, LwjglRuntime rt) {
+        this.rt = rt;
+
         // Setup error callback
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -315,6 +319,6 @@ public final class Frame implements IFrame {
 
     @Override
     public IRuntime getRuntime() {
-        return LwjglRuntime.getInstance();
+        return this.rt;
     }
 }
