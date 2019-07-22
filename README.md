@@ -8,14 +8,16 @@ Requires JDK 8 or above. Build with `./gradlew build`.
 
 Can be fetched using https://jitpack.io.
 
-Then you would pick one of the following (as this is a multi-module project) depending on the backend you want:
+You have to include the core project as `implementation` since all backends depend on it.
+
+Then you would pick one of the following as `runtimeOnly` depending on the backend you want:
 
 *   java2d: This one uses Java AWT, no native dependencies required
 *   lwjgl3: This one uses LWJGL3 components. If you pick this one, remember to declare the runtime dependencies of version 3.2.2 on `lwjgl`, `lwjgl-glfw`, `lwjgl-opengl` and `lwjgl-stb`. Also might need to add the `-XstartOnFirstThread` flag when running the application!
 
-Gradle will resolve the dependence on the core module, no need to explicitly declare it.
+You would acquire the selected backend using `java.util.ServiceLoader.load(IRuntime.class)`.
 
-An example of a single-moduled project referencing the lwjgl module 1.0 release:
+An example of a single-moduled project referencing the lwjgl module 1.1.0 release:
 
 ```groovy
 // build.gradle
@@ -47,7 +49,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Atoiks-Games.Framework2D:lwjgl3:1.0'
+    implementation 'com.github.Atoiks-Games.Framework2D:core:1.1.0'
+
+    runtimeOnly 'com.github.Atoiks-Games.Framework2D:lwjgl3:1.1.0'
 
     runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
