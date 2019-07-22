@@ -11,10 +11,10 @@ import org.lwjgl.system.*;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.Scene;
-import org.atoiks.games.framework2d.IFrame;
 import org.atoiks.games.framework2d.IRuntime;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
+import org.atoiks.games.framework2d.AbstractFrame;
 import org.atoiks.games.framework2d.ResourceManager;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -25,7 +25,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 import static org.lwjgl.system.MemoryStack.*;
 
-public final class Frame implements IFrame {
+public final class Frame extends AbstractFrame {
 
     private static interface BiIntConsumer {
 
@@ -48,6 +48,7 @@ public final class Frame implements IFrame {
     private int preFullScreenH = 0;
 
     public Frame(final FrameInfo info, LwjglRuntime rt) {
+        super(info);
         this.rt = rt;
 
         // Setup error callback
@@ -120,7 +121,7 @@ public final class Frame implements IFrame {
 
     @Override
     public void init() {
-        glfwShowWindow(this.window);
+        super.init();
         glfwFocusWindow(this.window);
 
         GL.createCapabilities();
@@ -131,58 +132,37 @@ public final class Frame implements IFrame {
     }
 
     @Override
-    public void loop() {
-        double previous = System.currentTimeMillis();
-        double steps = 0.0;
+    protected boolean shouldContinueRunning() {
+        return !glfwWindowShouldClose(this.window);
+    }
 
-        outer:
-        while (!glfwWindowShouldClose(this.window)) {
-            final double now = System.currentTimeMillis();
-            final double elapsed = now - previous;
-            previous = now;
-            steps += elapsed;
+    @Override
+    protected void resizeGame() {
+        this.setupRenderingMatrix();
 
-            this.setupRenderingMatrix();
-
-            // Resize current scene if necessary
-            final Scene currentScene = SceneManager.getCurrentScene();
-            if (this.shouldCallResize || lastScene != currentScene) {
-                this.shouldCallResize = false;
-                this.lastScene = currentScene;
-                this.consumeWindowSize(currentScene::resize);
-            }
-
-            // Run the next task in main thread if necessary
-            final FutureTask<?> task = ResourceManager.pollNextTask();
-            if (task != null) {
-                task.run();
-            }
-
-            while (steps >= this.msPerUpdate) {
-                if (!SceneManager.updateCurrentScene(this.secPerUpdate)) {
-                    return;
-                }
-
-                Input.invokeFrameUpdate();
-
-                if (SceneManager.shouldSkipCycle()) {
-                    // Reset time info
-                    previous = System.currentTimeMillis();
-                    steps = 0.0f;
-                    continue outer; // Restart entire process
-                }
-                steps -= this.msPerUpdate;
-            }
-
-            glLoadIdentity();
-
-            // Perform rendering and stuff
-            glClear(GL_DEPTH_BUFFER_BIT);
-            SceneManager.renderCurrentScene(graphics);
-
-            glfwSwapBuffers(this.window);
-            glfwPollEvents();
+        // Resize current scene if necessary
+        final Scene currentScene = SceneManager.getCurrentScene();
+        if (this.shouldCallResize || lastScene != currentScene) {
+            this.shouldCallResize = false;
+            this.lastScene = currentScene;
+            this.consumeWindowSize(currentScene::resize);
         }
+    }
+
+    @Override
+    public void renderGame() {
+        glLoadIdentity();
+
+        // Perform rendering and stuff
+        glClear(GL_DEPTH_BUFFER_BIT);
+        SceneManager.renderCurrentScene(graphics);
+
+        glfwSwapBuffers(this.window);
+    }
+
+    @Override
+    public void postRender() {
+        glfwPollEvents();
     }
 
     private void setupRenderingMatrix() {
@@ -210,6 +190,8 @@ public final class Frame implements IFrame {
 
     @Override
     public void close() {
+        super.close();
+
         glDisable(GL_TEXTURE_2D);
 
         // Free the window callbacks and destroy the window
