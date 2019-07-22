@@ -4,10 +4,6 @@ import java.util.concurrent.FutureTask;
 
 public abstract class AbstractFrame implements IFrame {
 
-    private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
-
-    protected boolean running = true;
-
     private final float secPerUpdate;
     private final float msPerUpdate;
 
@@ -20,29 +16,20 @@ public abstract class AbstractFrame implements IFrame {
     }
 
     @Override
-    public void init() {
-        if (ON_MAC) {
-            try {
-                Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false");
-            } catch (Exception ex) {
-                //
-            }
-        }
-    }
-
-    @Override
     public void loop() {
         double previous = System.currentTimeMillis();
         double steps = 0.0f;
 
         outer:
-        while (running) {
+        while (this.shouldContinueRunning()) {
             final double now = System.currentTimeMillis();
             final double elapsed = now - previous;
             previous = now;
             steps += elapsed;
 
-            resizeGame();
+            this.resizeGame();
+            this.pollDelayedTasks();
+
             while (steps >= msPerUpdate) {
                 if (!SceneManager.updateCurrentScene(secPerUpdate)) {
                     return;
@@ -60,25 +47,19 @@ public abstract class AbstractFrame implements IFrame {
                 steps -= msPerUpdate;
             }
 
-            // Force redraw here
-            renderGame();
-            pollDelayedTasks();
+            this.renderGame();
+            this.postRender();
         }
     }
 
     @Override
-    public void close() {
-        // Ensures leave for Scene gets called
-        SceneManager.clearAllScenes();
+    public void init() {
+        this.setVisible(true);
+    }
 
-        // Restore the mac stuff
-        if (ON_MAC) {
-            try {
-                Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true");
-            } catch (Exception ex) {
-                //
-            }
-        }
+    @Override
+    public void close() {
+        SceneManager.clearAllScenes();
     }
 
     private void pollDelayedTasks() {
@@ -88,7 +69,13 @@ public abstract class AbstractFrame implements IFrame {
         }
     }
 
+    protected abstract boolean shouldContinueRunning();
+
     protected abstract void resizeGame();
 
     protected abstract void renderGame();
+
+    protected void postRender() {
+        // Default do nothing
+    }
 }

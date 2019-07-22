@@ -22,6 +22,8 @@ import org.atoiks.games.framework2d.AbstractFrame;
 
 public class Frame extends AbstractFrame {
 
+    private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
+
     private final JavaGraphics graphics;
 
     private final JavaRuntime rt;
@@ -37,6 +39,8 @@ public class Frame extends AbstractFrame {
     // screen dimension before entering fullscreen mode
     private int preFullScreenW;
     private int preFullScreenH;
+
+    private boolean running = true;
 
     public Frame(FrameInfo info, JavaRuntime rt) {
         super(info);
@@ -104,6 +108,11 @@ public class Frame extends AbstractFrame {
     @Override
     public int getHeight() {
         return frame.getHeight() - insets.top - insets.bottom;
+    }
+
+    @Override
+    public boolean shouldContinueRunning() {
+        return this.running;
     }
 
     @Override
@@ -230,8 +239,15 @@ public class Frame extends AbstractFrame {
 
     @Override
     public void init() {
+        if (ON_MAC) {
+            try {
+                Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false");
+            } catch (Exception ex) {
+                //
+            }
+        }
+
         super.init();
-        frame.setVisible(true);
 
         // Use double buffering
         frame.createBufferStrategy(2);
@@ -241,9 +257,18 @@ public class Frame extends AbstractFrame {
     public void close() {
         // Exit exclusive fullscreen mode if we are in it
         exitExclusiveFullScreen();
+        frame.dispose();
 
         super.close();
-        frame.dispose();
+
+        // Restore the mac stuff
+        if (ON_MAC) {
+            try {
+                Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true");
+            } catch (Exception ex) {
+                //
+            }
+        }
     }
 
     @Override
