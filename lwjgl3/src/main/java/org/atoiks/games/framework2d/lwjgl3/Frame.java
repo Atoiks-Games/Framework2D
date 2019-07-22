@@ -2,8 +2,6 @@ package org.atoiks.games.framework2d.lwjgl3;
 
 import java.nio.*;
 
-import java.util.concurrent.FutureTask;
-
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -11,11 +9,9 @@ import org.lwjgl.system.*;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.Scene;
-import org.atoiks.games.framework2d.IRuntime;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
-import org.atoiks.games.framework2d.ResourceManager;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.Callbacks.*;
@@ -34,8 +30,6 @@ public final class Frame extends AbstractFrame {
 
     private final GLGraphics graphics = new GLGraphics();
 
-    private final LwjglRuntime rt;
-
     private final long window;
     private final float secPerUpdate;
     private final float msPerUpdate;
@@ -48,8 +42,7 @@ public final class Frame extends AbstractFrame {
     private int preFullScreenH = 0;
 
     public Frame(final FrameInfo info, LwjglRuntime rt) {
-        super(info);
-        this.rt = rt;
+        super(info, rt);
 
         // Setup error callback
         GLFWErrorCallback.createPrint(System.err).set();
@@ -297,10 +290,5 @@ public final class Frame extends AbstractFrame {
     @Override
     public void setTitle(String title) {
         glfwSetWindowTitle(this.window, title);
-    }
-
-    @Override
-    public IRuntime getRuntime() {
-        return this.rt;
     }
 }

@@ -15,7 +15,6 @@ import java.awt.image.BufferStrategy;
 
 import org.atoiks.games.framework2d.Input;
 import org.atoiks.games.framework2d.Scene;
-import org.atoiks.games.framework2d.IRuntime;
 import org.atoiks.games.framework2d.FrameInfo;
 import org.atoiks.games.framework2d.SceneManager;
 import org.atoiks.games.framework2d.AbstractFrame;
@@ -25,8 +24,6 @@ public class Frame extends AbstractFrame {
     private static final boolean ON_MAC = System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0;
 
     private final JavaGraphics graphics;
-
-    private final JavaRuntime rt;
 
     private final java.awt.Frame frame;
     private final Mouse compMouse;
@@ -43,8 +40,7 @@ public class Frame extends AbstractFrame {
     private boolean running = true;
 
     public Frame(FrameInfo info, JavaRuntime rt) {
-        super(info);
-        this.rt = rt;
+        super(info, rt);
 
         frame = new java.awt.Frame(info.getTitle());
 
@@ -269,10 +265,5 @@ public class Frame extends AbstractFrame {
                 //
             }
         }
-    }
-
-    @Override
-    public IRuntime getRuntime() {
-        return this.rt;
     }
 }

@@ -4,10 +4,14 @@ import java.util.concurrent.FutureTask;
 
 public abstract class AbstractFrame implements IFrame {
 
+    private final IRuntime rt;
+
     private final float secPerUpdate;
     private final float msPerUpdate;
 
-    protected AbstractFrame(final FrameInfo info) {
+    protected AbstractFrame(final FrameInfo info, final IRuntime associatedRuntime) {
+        this.rt = associatedRuntime;
+
         final float fps = info.getFps();
         this.secPerUpdate = 1.0f / fps;
         this.msPerUpdate = 1000.0f / fps;
@@ -77,5 +81,10 @@ public abstract class AbstractFrame implements IFrame {
 
     protected void postRender() {
         // Default do nothing
+    }
+
+    @Override
+    public final IRuntime getRuntime() {
+        return this.rt;
     }
 }
