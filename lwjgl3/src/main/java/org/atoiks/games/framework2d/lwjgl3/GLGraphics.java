@@ -155,11 +155,11 @@ import static org.lwjgl.opengl.GL11.*;
 
     @Override
     public void fillRect(int x1, int y1, int x2, int y2) {
-        glBegin(GL_QUADS);
-        glVertex2i(x1, y1);
-        glVertex2i(x2, y1);
-        glVertex2i(x2, y2);
+        glBegin(GL_TRIANGLE_STRIP);
         glVertex2i(x1, y2);
+        glVertex2i(x1, y1);
+        glVertex2i(x2, y2);
+        glVertex2i(x2, y1);
         glEnd();
     }
 
@@ -227,11 +227,11 @@ import static org.lwjgl.opengl.GL11.*;
 
     @Override
     public void fillRect(final float x1, final float y1, final float x2, final float y2) {
-        glBegin(GL_QUADS);
-        glVertex2f(x1, y1);
-        glVertex2f(x2, y1);
-        glVertex2f(x2, y2);
+        glBegin(GL_TRIANGLE_STRIP);
         glVertex2f(x1, y2);
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
+        glVertex2f(x2, y1);
         glEnd();
     }
 
@@ -258,19 +258,19 @@ import static org.lwjgl.opengl.GL11.*;
     private void drawGLTexture(GLTexture texture, float x1, float y1, float x2, float y2) {
         texture.bindTexture();
 
-        glBegin(GL_QUADS);
+        glBegin(GL_TRIANGLE_STRIP);
+
+        glTexCoord2f(0.0f, 1.0f);
+        glVertex2f(x1, y2);
 
         glTexCoord2f(0.0f, 0.0f);
         glVertex2f(x1, y1);
 
-        glTexCoord2f(1.0f, 0.0f);
-        glVertex2f(x2, y1);
-
         glTexCoord2f(1.0f, 1.0f);
         glVertex2f(x2, y2);
 
-        glTexCoord2f(0.0f, 1.0f);
-        glVertex2f(x1, y2);
+        glTexCoord2f(1.0f, 0.0f);
+        glVertex2f(x2, y1);
 
         glEnd();
 

@@ -140,14 +140,14 @@ public final class GLFont implements Font {
                     glTexCoord2f(q.s0(), q.t0());
                     glVertex2f(x0, y0);
 
-                    glTexCoord2f(q.s1(), q.t0());
-                    glVertex2f(x1, y0);
+                    glTexCoord2f(q.s0(), q.t1());
+                    glVertex2f(x0, y1);
 
                     glTexCoord2f(q.s1(), q.t1());
                     glVertex2f(x1, y1);
 
-                    glTexCoord2f(q.s0(), q.t1());
-                    glVertex2f(x0, y1);
+                    glTexCoord2f(q.s1(), q.t0());
+                    glVertex2f(x1, y0);
                 }
                 glEnd();
             }
