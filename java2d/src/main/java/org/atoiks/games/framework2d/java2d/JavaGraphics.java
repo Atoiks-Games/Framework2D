@@ -80,19 +80,10 @@ public final class JavaGraphics implements IGraphics {
         g.drawImage(((JavaTexture) img).image, x, y, null);
     }
 
-    @Override
-    public void drawTexture(Texture img, int x, int y, Color bg) {
-        g.drawImage(((JavaTexture) img).image, x, y, bg, null);
-    }
 
     @Override
     public void drawTexture(Texture img, int x1, int y1, int x2, int y2) {
         g.drawImage(((JavaTexture) img).image, x1, y1, x2 - x1, y2 - y1, null);
-    }
-
-    @Override
-    public void drawTexture(Texture img, int x1, int y1, int x2, int y2, Color bg) {
-        g.drawImage(((JavaTexture) img).image, x1, y1, x2 - x1, y2 - y1, bg, null);
     }
 
     @Override
@@ -126,18 +117,8 @@ public final class JavaGraphics implements IGraphics {
     }
 
     @Override
-    public void drawTexture(Texture img, float x, float y, Color bg) {
-        g.drawImage(((JavaTexture) img).image, (int) x, (int) y, bg, null);
-    }
-
-    @Override
     public void drawTexture(Texture img, float x1, float y1, float x2, float y2) {
         g.drawImage(((JavaTexture) img).image, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), null);
-    }
-
-    @Override
-    public void drawTexture(Texture img, float x1, float y1, float x2, float y2, Color bg) {
-        g.drawImage(((JavaTexture) img).image, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1), bg, null);
     }
 
     @Override

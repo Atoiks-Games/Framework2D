@@ -100,23 +100,8 @@ import static org.lwjgl.opengl.GL11.*;
     }
 
     @Override
-    public void drawTexture(final Texture img, final int x, final int y, Color c) {
-        glColor4fv(c.getRGBComponents(new float[4]));
-        final GLTexture tex = (GLTexture) img;
-        this.drawGLTexture(tex, x, y, x + tex.getWidth(), y + tex.getHeight());
-        glColor4fv(this.fgColor);
-    }
-
-    @Override
     public void drawTexture(final Texture img, final int x1, final int y1, final int x2, final int y2) {
         glColor4f(1, 1, 1, 1);
-        this.drawGLTexture((GLTexture) img, x1, y1, x2, y2);
-        glColor4fv(this.fgColor);
-    }
-
-    @Override
-    public void drawTexture(final Texture img, final int x1, final int y1, final int x2, final int y2, Color c) {
-        glColor4fv(c.getRGBComponents(new float[4]));
         this.drawGLTexture((GLTexture) img, x1, y1, x2, y2);
         glColor4fv(this.fgColor);
     }
@@ -176,23 +161,8 @@ import static org.lwjgl.opengl.GL11.*;
     }
 
     @Override
-    public void drawTexture(final Texture img, final float x, final float y, Color c) {
-        glColor4fv(c.getRGBComponents(new float[4]));
-        final GLTexture tex = (GLTexture) img;
-        this.drawGLTexture(tex, x, y, x + tex.getWidth(), y + tex.getHeight());
-        glColor4fv(this.fgColor);
-    }
-
-    @Override
     public void drawTexture(final Texture img, final float x1, final float y1, final float x2, final float y2) {
         glColor4f(1, 1, 1, 1);
-        this.drawGLTexture((GLTexture) img, x1, y1, x2, y2);
-        glColor4fv(this.fgColor);
-    }
-
-    @Override
-    public void drawTexture(final Texture img, final float x1, final float y1, final float x2, final float y2, Color c) {
-        glColor4fv(c.getRGBComponents(new float[4]));
         this.drawGLTexture((GLTexture) img, x1, y1, x2, y2);
         glColor4fv(this.fgColor);
     }

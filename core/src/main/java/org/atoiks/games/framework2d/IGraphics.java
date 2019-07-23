@@ -20,9 +20,7 @@ public interface IGraphics {
     public void rotate(float angle, float x, float y);
 
     public void drawTexture(Texture img, int x, int y);
-    public void drawTexture(Texture img, int x, int y, Color bg);
     public void drawTexture(Texture img, int x1, int y1, int x2, int y2);
-    public void drawTexture(Texture img, int x1, int y1, int x2, int y2, Color bg);
 
     public void drawLine(int x1, int y1, int x2, int y2);
 
@@ -40,9 +38,7 @@ public interface IGraphics {
     public void fillRect(int x1, int y1, int x2, int y2);
 
     public void drawTexture(Texture img, float x, float y);
-    public void drawTexture(Texture img, float x, float y, Color bg);
     public void drawTexture(Texture img, float x1, float y1, float x2, float y2);
-    public void drawTexture(Texture img, float x1, float y1, float x2, float y2, Color bg);
 
     public void drawLine(float x1, float y1, float x2, float y2);
     public default void drawPoints(final float[] coords) {
