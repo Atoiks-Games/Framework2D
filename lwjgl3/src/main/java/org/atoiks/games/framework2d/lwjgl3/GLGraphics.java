@@ -19,9 +19,11 @@ import static org.lwjgl.opengl.GL11.*;
     private final float[] bgColor = new float[4];
     private final float[] fgColor = new float[4];
 
+    private boolean isFgColorWhite = false;
+
     @Override
     public void setColor(Color color) {
-        glColor4fv(color.getRGBComponents(this.fgColor));
+        this.setColor(color.getRGBComponents(this.fgColor));
     }
 
     @Override
@@ -30,7 +32,12 @@ import static org.lwjgl.opengl.GL11.*;
         this.fgColor[1] = g;
         this.fgColor[2] = b;
         this.fgColor[3] = a;
-        glColor4fv(this.fgColor);
+        this.setColor(this.fgColor);
+    }
+
+    private void setColor(final float[] buf) {
+        this.isFgColorWhite = buf[0] == 1 && buf[1] == 1 && buf[2] == 1 && buf[3] == 1;
+        glColor4fv(buf);
     }
 
     @Override
@@ -93,17 +100,19 @@ import static org.lwjgl.opengl.GL11.*;
 
     @Override
     public void drawTexture(final Texture img, final int x, final int y) {
-        glColor4f(1, 1, 1, 1);
+        final boolean changeColor = !this.isFgColorWhite;
+        if (changeColor) glColor4f(1, 1, 1, 1);
         final GLTexture tex = (GLTexture) img;
         this.drawGLTexture(tex, x, y, x + tex.getWidth(), y + tex.getHeight());
-        glColor4fv(this.fgColor);
+        if (changeColor) glColor4fv(this.fgColor);
     }
 
     @Override
     public void drawTexture(final Texture img, final int x1, final int y1, final int x2, final int y2) {
-        glColor4f(1, 1, 1, 1);
+        final boolean changeColor = !this.isFgColorWhite;
+        if (changeColor) glColor4f(1, 1, 1, 1);
         this.drawGLTexture((GLTexture) img, x1, y1, x2, y2);
-        glColor4fv(this.fgColor);
+        if (changeColor) glColor4fv(this.fgColor);
     }
 
     @Override
@@ -154,17 +163,19 @@ import static org.lwjgl.opengl.GL11.*;
 
     @Override
     public void drawTexture(final Texture img, final float x, final float y) {
-        glColor4f(1, 1, 1, 1);
+        final boolean changeColor = !this.isFgColorWhite;
+        if (changeColor) glColor4f(1, 1, 1, 1);
         final GLTexture tex = (GLTexture) img;
         this.drawGLTexture(tex, x, y, x + tex.getWidth(), y + tex.getHeight());
-        glColor4fv(this.fgColor);
+        if (changeColor) glColor4fv(this.fgColor);
     }
 
     @Override
     public void drawTexture(final Texture img, final float x1, final float y1, final float x2, final float y2) {
-        glColor4f(1, 1, 1, 1);
+        final boolean changeColor = !this.isFgColorWhite;
+        if (changeColor) glColor4f(1, 1, 1, 1);
         this.drawGLTexture((GLTexture) img, x1, y1, x2, y2);
-        glColor4fv(this.fgColor);
+        if (changeColor) glColor4fv(this.fgColor);
     }
 
     @Override
