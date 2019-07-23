@@ -56,6 +56,13 @@ public interface IGraphics {
     public void drawOval(float x1, float y1, float x2, float y2);
     public void fillOval(float x1, float y1, float x2, float y2);
 
+    public default void drawCircle(float x, float y, float r) {
+        drawOval(x - r, y - r, x + r, y + r);
+    }
+    public default void fillCircle(float x, float y, float r) {
+        fillOval(x - r, y - r, x + r, y + r);
+    }
+
     public void drawRect(float x1, float y1, float x2, float y2);
     public void fillRect(float x1, float y1, float x2, float y2);
 
