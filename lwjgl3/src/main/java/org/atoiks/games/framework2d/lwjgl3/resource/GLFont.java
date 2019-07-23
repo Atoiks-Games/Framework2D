@@ -31,7 +31,7 @@ public final class GLFont implements Font {
 
     private static class FontData {
 
-        private static final float BASE_HEIGHT = 32.0f;
+        private static final float BASE_HEIGHT = 48.0f;
 
         // reference counted!
         private int refCount;
