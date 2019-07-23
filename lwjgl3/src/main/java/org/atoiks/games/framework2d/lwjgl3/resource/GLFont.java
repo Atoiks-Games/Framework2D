@@ -22,7 +22,7 @@ import org.atoiks.games.framework2d.resource.Font;
 import static org.lwjgl.stb.STBTruetype.*;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
 
 public final class GLFont implements Font {
 
@@ -31,7 +31,7 @@ public final class GLFont implements Font {
 
     private static class FontData {
 
-        private static final float BASE_HEIGHT = 16.0f;
+        private static final float BASE_HEIGHT = 48.0f;
 
         // reference counted!
         private int refCount;
@@ -71,8 +71,8 @@ public final class GLFont implements Font {
             glBindTexture(GL_TEXTURE_2D, texID);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, BITMAP_W, BITMAP_H, 0, GL_ALPHA, GL_UNSIGNED_BYTE, bitmap);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
