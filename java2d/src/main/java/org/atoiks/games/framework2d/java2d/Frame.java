@@ -107,6 +107,21 @@ public class Frame extends AbstractFrame {
     }
 
     @Override
+    public void setPosition(int x, int y) {
+        frame.setLocation(x - insets.left, y - insets.top);
+    }
+
+    @Override
+    public int getPositionX() {
+        return frame.getLocation().x + insets.left;
+    }
+
+    @Override
+    public int getPositionY() {
+        return frame.getLocation().y + insets.top;
+    }
+
+    @Override
     public boolean shouldContinueRunning() {
         return this.running;
     }

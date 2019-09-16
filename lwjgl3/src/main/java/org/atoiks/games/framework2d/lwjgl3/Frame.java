@@ -271,6 +271,31 @@ public final class Frame extends AbstractFrame {
     }
 
     @Override
+    public void setPosition(int x, int y) {
+        glfwSetWindowPos(this.window, x, y);
+    }
+
+    @Override
+    public int getPositionX() {
+        try (final MemoryStack stack = stackPush()) {
+            final IntBuffer xptr = stack.mallocInt(1);
+            final IntBuffer yptr = stack.mallocInt(1);
+            glfwGetWindowPos(this.window, xptr, yptr);
+            return xptr.get(0);
+        }
+    }
+
+    @Override
+    public int getPositionY() {
+        try (final MemoryStack stack = stackPush()) {
+            final IntBuffer xptr = stack.mallocInt(1);
+            final IntBuffer yptr = stack.mallocInt(1);
+            glfwGetWindowPos(this.window, xptr, yptr);
+            return yptr.get(0);
+        }
+    }
+
+    @Override
     public void setVisible(boolean status) {
         if (status) {
             glfwShowWindow(this.window);

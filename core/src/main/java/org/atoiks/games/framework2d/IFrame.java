@@ -13,6 +13,10 @@ public interface IFrame extends AutoCloseable {
     public int getWidth();
     public int getHeight();
 
+    public void setPosition(int x, int y);
+    public int getPositionX();
+    public int getPositionY();
+
     public void setVisible(boolean status);
     public boolean isVisible();
 
